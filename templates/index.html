@@ -1,17 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends "layout.html" %}
 
-    <link rel="stylesheet" href="/static/header.css">
-    <title>Hooter - {{page_name}}</title>
-</head>
-<body>
-    <header>
-        <div id="logo"><h1><span>H</span>OOTER</h1></div>
+{% block body %}
+    <link rel="stylesheet" href="../static/homepage.css">
 
-        <div id="green">Hi, editor</div>
-    </header>
-</body>
-</html>
+    <div id="upper-section">
+        <a id="add" class="button" href="/add">
+            <div class="icon"></div>
+            <h3 class="desc">Add</h3>
+        </a>
+
+        <a id="edit" class="button" href="/edit">
+            <div class="icon"></div>
+            <h3 class="desc">Edit</h3>
+        </a>
+        <a id="draft" class="button" href="/draft">
+            <div class="icon"></div>
+            <h3 class="desc">Draft</h3>
+        </a>
+    </div>
+
+    <div id="logo"></div>
+{% endblock %}

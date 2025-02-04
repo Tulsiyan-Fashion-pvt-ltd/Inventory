@@ -12,10 +12,39 @@ header {
     height: 5.63em;
 }
 
-h1 span{
+h1 span {
     color: #005C83;
 }
 
-h1{
+h1 {
     font-size: 3em;
+}
+
+#greet {
+    font-size: 1.8em;
+}
+
+main {
+    display: flex;
+}
+
+#sidebar {
+    height: 90.6dvh;
+    width: 20em;
+    background-color: #005C83;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#shop-icon {
+    height: 7em;
+    width: 7em;
+    background: white;
+    background-image: url(../static/icons/shop.svg);
+    background-repeat: no-repeat;
+    background-size: 68%;
+    background-position: center center;
+    border-radius: 80px;
+    margin-top: 3em;
 }

@@ -1,0 +1,54 @@
+.icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 6.5em;
+    width: 6.2em;
+}
+
+#add .icon {
+    background-image: url(../static/icons/add.svg);
+}
+
+#edit .icon {
+    background-image: url(../static/icons/edit.svg)
+}
+
+#draft .icon {
+    background-image: url(../static/icons/draft.svg);
+}
+
+main #logo {
+    background-image: url(../static//icons/hooter.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 14em;
+    width: 14em;
+    margin-top: 11em;
+}
+
+#main-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+#upper-section {
+    display: flex;
+    justify-content: space-between;
+    width: 92%;
+    margin: 5em 0em;
+}
+
+.button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}

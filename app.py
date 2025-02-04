@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, url_for, redirect
+from flask import Flask, render_template, session, url_for, redirect, request
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -18,6 +18,21 @@ mysql = MySQL(app)
 def index():
     return render_template('index.html', page_name="homepage")
 
+
+@app.route("/add", methods = ['POST', 'GET'])
+def add():
+    if request.method == "GET":
+        return render_template('add.html', page_name="add products")
+    
+@app.route("/draft", methods=['POST', 'GET'])
+def draft():
+    if request.method == "GET":
+        return render_template('draft.html', page_name="draft products")
+    
+@app.route("/edit", methods=['POST', 'GET'])
+def edit():
+    if request.method == "GET":
+        return render_template('edit.html', page_name="edit products")
 
 if __name__ == "__main__":
     app.run(debug=True)
