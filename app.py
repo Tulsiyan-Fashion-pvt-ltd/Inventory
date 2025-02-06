@@ -24,6 +24,9 @@ def index():
 
 # to generate unique value
 def generate_unique_id():
+    if session.get('user') == None:
+        return redirect('/login')
+    
     return str(uuid.uuid4())
 
 @app.route("/add", methods = ['POST', 'GET'])
