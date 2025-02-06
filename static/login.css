@@ -1,0 +1,43 @@
+#login-container {
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    min-height: 33em;
+    min-width: 56em;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+input {
+    font-size: 1.5em;
+    line-height: 2em;
+    width: 23em;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    gap: 2em;
+    align-items: center;
+}
+
+#submit{
+    font-size: 1.5em;
+    line-height: 2em;
+    font-weight: bolder;
+    color: white;
+    width: 9em;
+    background-color: #009FE3;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}

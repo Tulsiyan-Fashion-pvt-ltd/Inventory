@@ -1,0 +1,50 @@
+input {
+    font-size: 1.3em;
+    padding-left: 1em;
+    line-height: 2em;
+    width: 43vw;
+}
+
+#inputs {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2em;
+}
+
+form {
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 4em;
+    margin-left: 6em;
+}
+
+#main-container {
+    display: flex;
+    width: 100%;
+}
+
+#right-section input {
+    width: 19vw;
+}
+
+#right-section {
+    margin-left: 3em;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+#submit{
+    margin-top: 2em;
+    height: 3em;
+    border-radius: 5px;
+    background-color: #7AD1E5;
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bolder;
+}
+
+button:active{
+    opacity: 80%;
+}

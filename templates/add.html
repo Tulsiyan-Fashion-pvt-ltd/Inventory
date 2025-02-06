@@ -1,5 +1,33 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<link rel="stylesheet" href="../static/add.css">
+<form method="post" enctype="multipart/form-data">
+    <div id="inputs">
+        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required>
+        <input type="text" id="vendor-id" name="vid" placeholder="VENDOR ID">
+        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION" required>
+        <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required>
+        <input type="text" id="weight" name="weight" placeholder="PRODUCT WEIGHT (in gms)" required>
+        <input type="text" id="price" name="price" placeholder="PRODUCT PRICE" required>
+        <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK">
+    </div>
 
+    <div id="right-section">
+        <div id="img01">
+            <div id="overview"></div><input type="file" name="img01" id="img-input01" accept="image/*" required>
+        </div> 
+        <div id="img02">
+            <div id="overview"></div><input type="file" name="img02" id="img-input02" accept="image/*" required>
+        </div>
+        <div id="img03">
+            <div id="overview"></div><input type="file" name="img03" id="img-input03" accept="image/*" required>
+        </div>
+        <div id="img04">
+            <div id="overview"></div><input type="file" name="img04" id="img-input04" accept="image/*" required>
+        </div>
+        
+        <button id="submit">UPLOAD PRODUCT</button>
+    </div>
+</form>
 {% endblock %}
