@@ -4,13 +4,22 @@
 <link rel="stylesheet" href="../static/add.css">
 <form method="post" enctype="multipart/form-data">
     <div id="inputs">
-        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required>
+        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required autocomplete="off">
         <input type="text" id="vendor-id" name="vid" placeholder="VENDOR ID">
-        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION" required>
+        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION/ DETAILS" required autocomplete="off">
         <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required>
         <input type="text" id="weight" name="weight" placeholder="PRODUCT WEIGHT (in gms)" required>
-        <input type="text" id="price" name="price" placeholder="PRODUCT PRICE" required>
-        <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK">
+        <input type="text" id="price" name="price" placeholder="PRODUCT PRICE" required autocomplete="off">
+        <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK" required>
+        <input type="text" id="saree-len" name="slen" placeholder="LENGTH OF SAREE (in meters)" required>
+        <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
+        <select name="material" id="material" required>
+            <option value="default" disabled selected>PRODUCT MATERIAL</option>
+            {% for item in material %}
+                <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" id="care" name="product-care" placeholder="PRODUCT CARE" required>
     </div>
 
     <div id="right-section">

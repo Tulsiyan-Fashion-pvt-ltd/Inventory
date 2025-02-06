@@ -48,3 +48,10 @@ main {
     border-radius: 80px;
     margin-top: 3em;
 }
+
+#main-container {
+    display: flex;
+    width: 100%;
+    overflow-y: scroll;
+    height: 90.6dvh;
+}

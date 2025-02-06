@@ -16,6 +16,7 @@ form {
     flex-flow: row wrap;
     margin-top: 4em;
     margin-left: 6em;
+    min-height: 90dvh;
 }
 
 #main-container {
@@ -47,4 +48,11 @@ form {
 
 button:active{
     opacity: 80%;
+}
+
+select#material{
+    font-size: 1.3em;
+    line-height: 2em;
+    height: 2em;
+    padding-left: 1em;
 }

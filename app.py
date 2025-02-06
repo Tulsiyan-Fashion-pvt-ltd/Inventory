@@ -17,7 +17,6 @@ app.secret_key = "6129097fee5199dfa20d2ac8d06ba06ec3ad49c2c3a725ed18ab605e122f4d
 
 
 app.config['MYSQL_HOST'] = "localhost"
-# app.config['MYSQL_PORT'] = 3306
 app.config["MYSQL_USER"] = "root"       
 app.config["MYSQL_PASSWORD"] = "9624"
 app.config["MYSQL_DB"] = "tulsiyandb"
@@ -36,23 +35,36 @@ def index():
 def generate_unique_id():  
     return str(uuid.uuid4())
 
+
+
+saree_materials = [
+    "Banarasi Silk", "Kanchipuram Silk", "Tussar Silk", "Mysore Silk",
+    "Handloom Cotton", "Chanderi Cotton", "Tant Cotton",
+    "Georgette", "Chiffon", "Crepe", "Net", 
+    "Linen", "Satin", "Organza", "Velvet"
+]
+
 @app.route("/add", methods = ['POST', 'GET'])
 def add():
     if session.get('user') == None:
         return redirect('/login')
 
     if request.method == "GET":
-        return render_template('add.html', page_name="add products")
+        return render_template('add.html', page_name="add products", material=saree_materials)
     else:
         data = request.form
-        productid = str(uuid.uuid4())
-        title = data.get('title')
-        vendorid = data.get('vid', 'NULL')
-        product_desc = data.get('desc')
-        product_kwords = data.get('keywords')
-        product_weight = data.get('weight')
-        product_price = data.get('price')
-        product_stock = data.get('stock')
+        productid = str(uuid.uuid4()).strip()
+        title = data.get('title').strip()
+        vendorid = data.get('vid', 'NULL').strip()
+        product_desc = data.get('desc').strip()
+        product_kwords = data.get('keywords').split(',')
+        product_weight = data.get('weight').strip()
+        product_price = data.get('price').replace(',', '')
+        product_stock = data.get('stock').strip()
+        slen = data.get('slen').strip()
+        blen = data.get('blen').strip()
+        material = data.get('material').strip()
+        care = data.get('product-care').strip()
 
         file01 = request.files['img01']
         main_image = file01.read()
@@ -70,10 +82,16 @@ def add():
         date = date.strftime("%Y-%m-%d")
         cursor = mysql.connection.cursor()
         cursor.execute('''insert into inventory(productID, vendor_id, product_desc, product_price, product_weight_gm, 
-                       product_stock, product_image, product_img01, product_img02, product_img03, creation_date) values(
-                       %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
-                       (productid, vendorid, title, product_price, product_weight, product_stock, main_image,
-                       img02, img03, img04, date))
+                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                       product_img01, product_img02, product_img03, creation_date) values(
+                       %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
+                       (productid, vendorid, title, product_price, product_weight, product_stock, product_desc,
+                        slen, blen, material, care, main_image, img02, img03, img04, date))
+        
+        for _ in product_kwords:
+            keyword = _.strip()
+            cursor.execute('''insert into searching_keywords(productId, search_result) values(%s, %s)''',
+                           (productid, keyword))
         mysql.connection.commit()
         cursor.close()
         return redirect('/add')
