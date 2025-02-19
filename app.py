@@ -53,18 +53,18 @@ def add():
         return render_template('add.html', page_name="add products", material=saree_materials)
     else:
         data = request.form
-        productid = str(uuid.uuid4()).strip()
+        productid = str(uuid.uuid4()).strip().strip()
         title = data.get('title').strip()
         vendorid = data.get('vid', 'NULL').strip()
         product_desc = data.get('desc').strip()
         product_kwords = data.get('keywords').split(',')
-        product_weight = data.get('weight').strip()
-        product_price = data.get('price').replace(',', '')
-        product_stock = data.get('stock').strip()
-        slen = data.get('slen').strip()
-        blen = data.get('blen').strip()
-        material = data.get('material').strip()
-        care = data.get('product-care').strip()
+        product_weight = data.get('weight').strip().strip()
+        product_price = data.get('price').replace(',', '').strip()
+        product_stock = data.get('stock').strip().strip()
+        slen = data.get('slen').strip().strip()
+        blen = data.get('blen').strip().strip()
+        material = data.get('material').strip().strip()
+        care = data.get('product-care').strip().strip()
 
         file01 = request.files['img01']
         main_image = file01.read()
