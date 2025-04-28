@@ -9,7 +9,9 @@
         <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION/ DETAILS" required autocomplete="off">
         <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required>
         <input type="text" id="weight" name="weight" placeholder="PRODUCT WEIGHT (in gms)" required>
-        <input type="text" id="price" name="price" placeholder="PRODUCT PRICE" required autocomplete="off">
+        <input type="text" id="price" name="price" placeholder="₹ ORIGINAL PRODUCT PRICE" required autocomplete="off">
+        <input type="text" id="dsc-price" name="dsc-price" placeholder="₹ DISCOUNTED PRODUCT PRICE" required autocomplete="off" >
+        <input type="text" id="dsc-percentage" name="dsc-prctng" placeholder="DISCOUNT PERCENTAGE %" required autocomplete="off" disabled>
         <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK" required>
         <input type="text" id="saree-len" name="slen" placeholder="LENGTH OF SAREE (in meters)" required>
         <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
@@ -39,4 +41,41 @@
         <button id="submit">UPLOAD PRODUCT</button>
     </div>
 </form>
+
+
+<script>
+    function percentage(){
+        let originalPrice = document.querySelector('#price');
+        let discounted_price = document.querySelector('#dsc-price');
+        let percent = document.querySelector('#dsc-percentage');
+
+        let array = [originalPrice, discounted_price, percent];
+
+        document.addEventListener('keyup', event => {
+            if (array.includes(event.target)){
+                
+                let value = Number(event.target.value);
+                console.log(value)
+                if(Number.isNaN(value)){
+                    event.target.style.outline = '2px solid red';
+                }
+                else{
+                    event.target.style.outline = 'none';
+
+                    //<!-- writing the actual code now -->
+                    //<!-- calculate percentage and  display -->
+                    
+                    let ttlPrice = originalPrice.value;
+                    let disc = discounted_price.value;
+                    let result = percent.value;
+
+                    result = Math.trunc((100 - ((disc/ttlPrice)*100))*100)/100;
+                    percent.value = 'Discount '+result+' %';
+                }
+            }
+        })
+    }
+
+    percentage();
+</script>
 {% endblock %}
