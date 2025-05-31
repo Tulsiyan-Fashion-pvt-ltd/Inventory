@@ -124,6 +124,57 @@ def edit():
     
     if request.method == "GET":
         return render_template('edit.html', page_name="edit products")
+    else:
+        # see the data thoroughly and make it to work for edit page
+        data = request.form
+        skuid = product_handler.create_sku()
+        title = data.get('title').strip()
+        vendorid = data.get('vid', 'NULL').strip()
+        product_desc = data.get('desc').strip()
+        product_kwords = data.get('keywords').split(',')
+        product_weight = data.get('weight').strip().strip()
+        original_price = data.get('price').replace(',', '').strip()
+        discounted_price = data.get('dsc-price').replace(',', '').strip()
+        product_stock = data.get('stock').strip().strip()
+        slen = data.get('slen').strip().strip()
+        blen = data.get('blen').strip().strip()
+        material = data.get('material').strip().strip()
+        care = data.get('product-care').strip().strip()
+
+        file01 = request.files['img01']
+        main_image = file01.read()
+
+        file02 = request.files['img02']
+        img02 = file02.read()
+        
+        file03 = request.files['img03']
+        img03 = file03.read()
+        
+        file04 = request.files['img04']
+        img04 = file04.read()
+
+        date = datetime.now()
+        date = date.strftime("%Y-%m-%d")
+        cursor = mysql.connection.cursor()
+        cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
+                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                       product_img01, product_img02, product_img03, creation_date) values(
+                       %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
+                       (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
+                        slen, blen, material, care, main_image, img02, img03, img04, date))
+        
+        for _ in product_kwords:
+            keyword = _.strip()
+            cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
+                           (skuid, keyword))
+            
+        for _ in range(int(product_stock)):
+            productid = product_handler.create_productid()
+            cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
+
+        mysql.connection.commit()
+        cursor.close()
+        return redirect('/edit')
     
 
 @app.route('/login', methods=['POST', 'GET'])
