@@ -1,7 +1,8 @@
-from flask import Flask, render_template, session, url_for, redirect, request
+from flask import Flask, render_template, session, url_for, redirect, request, jsonify
 from flask_mysqldb import MySQL
 import uuid
 from datetime import datetime, timedelta
+import base64
 creds = {'Tulsiyan-inventory__@rootUser': '033f48f54a0b6a3bd062'}
 
 
@@ -125,6 +126,56 @@ def edit():
     if request.method == "GET":
         return render_template('edit.html', page_name="edit products")
     else:
+
+        if request.get_json() != None:
+            query = request.get_json().get('query')
+            
+            # write a function to fetch the provided query and fetch the product data and return
+            cursor = mysql.connection.cursor()
+            data = cursor.execute('''
+                            select vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
+                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                       product_img01, product_img02, product_img03
+                       from inventory where skuID=%s
+                       ''', (query, ))
+
+            data = cursor.fetchone()
+            cursor.close()
+            # print(data)
+            product_details = {
+                'img01': base64.b64encode(data[11]).decode('utf-8'),
+                'img02': base64.b64encode(data[12]).decode('utf-8'),
+                'img03': base64.b64encode(data[13]).decode('utf-8'),
+                'img04': base64.b64encode(data[14]).decode('utf-8'),
+                'title': data[1],
+                'vid': data[0],
+                'desc': data[6],
+                'weight': data[4],
+                'og_price': data[2],
+                'disc_price': data[3],
+                'stock': data[5],
+                'slen': data[7],
+                'blen': data[8],
+                'material': data[9],
+                'care': data[10]
+            }
+
+            cursor = mysql.connection.cursor()
+            cursor.execute('''
+                           select search_result from searching_keywords where skuId = %s
+                           ''', (query, ))
+
+            keywords = cursor.fetchall()
+            cursor.close()
+
+            keywords = [ item[0]
+                for item in keywords
+            ]
+            # print(keywords)
+            response_data = {'data': product_details, 'keywords': (', ').join(keywords)}
+            # print(response_data)
+            return jsonify(response_data)
+
         # see the data thoroughly and make it to work for edit page
         data = request.form
         skuid = product_handler.create_sku()
