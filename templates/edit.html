@@ -101,6 +101,7 @@
         let result = Math.trunc((100 - ((disc/ttlPrice)*100))*100)/100;
         return 'Discount '+result+' %';
     }
+
     percentage();
 </script>
 
@@ -145,7 +146,8 @@
             let disc_price = document.querySelector('#dsc-price');
             disc_price.value = data.disc_price;
 
-            percentage();
+            let prctng = document.querySelector('#dsc-percentage');
+            prctng.value = calculate(disc_price.value, price.value);
 
 
         }
