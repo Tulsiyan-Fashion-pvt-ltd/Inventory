@@ -124,7 +124,7 @@ def edit():
         return redirect('/login')
     
     if request.method == "GET":
-        return render_template('edit.html', page_name="edit products")
+        return render_template('edit.html', page_name="edit products", material=saree_materials)
     else:
 
         if request.get_json() != None:

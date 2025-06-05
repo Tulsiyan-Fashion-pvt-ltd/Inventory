@@ -21,3 +21,11 @@
 .title{
     margin-bottom: -2em;
 }
+
+#overview{
+    border: 1px solid black;
+    height: 7em;
+    width: 6em;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
