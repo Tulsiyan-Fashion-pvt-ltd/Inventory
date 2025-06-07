@@ -126,9 +126,10 @@ def edit():
     if request.method == "GET":
         return render_template('edit.html', page_name="edit products", material=saree_materials)
     else:
-
-        if request.get_json() != None:
+        skuid = session.get('skuid')
+        if request.content_type == 'application/json':
             query = request.get_json().get('query')
+            session['skuid'] = query
             
             # write a function to fetch the provided query and fetch the product data and return
             cursor = mysql.connection.cursor()
@@ -176,9 +177,8 @@ def edit():
             # print(response_data)
             return jsonify(response_data)
 
-        # see the data thoroughly and make it to work for edit page
+        # when the update buttons is clicked update the data
         data = request.form
-        skuid = product_handler.create_sku()
         title = data.get('title').strip()
         vendorid = data.get('vid', 'NULL').strip()
         product_desc = data.get('desc').strip()
@@ -207,15 +207,41 @@ def edit():
         date = datetime.now()
         date = date.strftime("%Y-%m-%d")
         cursor = mysql.connection.cursor()
-        cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
-                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
-                       product_img01, product_img02, product_img03, creation_date) values(
-                       %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
-                       (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
-                        slen, blen, material, care, main_image, img02, img03, img04, date))
+        cursor.execute('''
+                       update inventory set
+                       product_desc = %s,
+                       vendor_id = %s,
+                       product_details = %s, 
+                       product_weight_gm = %s,
+                       original_price = %s, 
+                       disc_price = %s, 
+                       product_stock = %s, 
+                       saree_len = %s, 
+                       blouse_len = %s,
+                       product_material = %s,
+                       product_care = %s,
+                       updation_date = %s
+                       where skuID = %s
+        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, care, date, skuid))
         
+        if file01 and file02 and file03 and file04:
+            cursor.execute('''update inventory
+                            set product_image = %s,
+                            product_img01 = %s,
+                            product_img02 = %s,
+                            product_img03 = %s
+                            ''', (main_image, img02, img03, img04))
+
+        # clearing all the prev searching keywords
+        cursor.execute('''
+                            delete from searching_keywords where skuID = %s''', (skuid, ))
+
+        # assigning new skuids for the new stock
+        cursor.execute('''
+                            delete from products where skuID = %s''', (skuid, ))
         for _ in product_kwords:
             keyword = _.strip()
+
             cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
                            (skuid, keyword))
             
@@ -225,6 +251,7 @@ def edit():
 
         mysql.connection.commit()
         cursor.close()
+        print('product updated successfully *_*')
         return redirect('/edit')
     
 

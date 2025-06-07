@@ -35,7 +35,7 @@
         <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
         <p class="title">PRODUCT MATERIAL</p>
         <select name="material" id="material" required>
-            <option value="default" disabled selected>PRODUCT MATERIAL</option>
+            <option value="default" selected>PRODUCT MATERIAL</option>
             {% for item in material %}
                 <option value="{{ item }}">{{ item }}</option>
             {% endfor %}
@@ -47,16 +47,16 @@
 
     <div id="right-section">
         <div id="img01">
-            <div id="overview"></div><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*" required>
+            <div id="overview"></div><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*">
         </div> 
         <div id="img02">
-            <div id="overview"></div><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*" required>
+            <div id="overview"></div><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*">
         </div>
         <div id="img03">
-            <div id="overview"></div><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*" required>
+            <div id="overview"></div><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*">
         </div>
         <div id="img04">
-            <div id="overview"></div><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*" required>
+            <div id="overview"></div><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*">
         </div>
         
         <button id="submit" type="submit">UPDATE PRODUCT DETAILS</button>
