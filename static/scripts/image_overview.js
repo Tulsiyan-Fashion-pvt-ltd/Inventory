@@ -15,7 +15,7 @@ function imageOverview(){
                 const reader = new FileReader();
 
                 reader.onload = e=>{
-                    element.previousElementSibling.style.backgroundImage = `url(${e.target.result})`;
+                    element.previousElementSibling.src = e.target.result;
                 }
 
                 reader.readAsDataURL(files);

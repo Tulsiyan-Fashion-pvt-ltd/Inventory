@@ -47,16 +47,16 @@
 
     <div id="right-section">
         <div id="img01">
-            <div id="overview"></div><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*">
+            <img id="overview"><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*">
         </div> 
         <div id="img02">
-            <div id="overview"></div><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*">
+            <img id="overview"><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*">
         </div>
         <div id="img03">
-            <div id="overview"></div><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*">
+            <img id="overview"><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*">
         </div>
         <div id="img04">
-            <div id="overview"></div><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*">
+            <img id="overview"><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*">
         </div>
         
         <button id="submit" type="submit">UPDATE PRODUCT DETAILS</button>
@@ -166,16 +166,16 @@
             care.value = data.care;
 
             let img01 = document.querySelector('#img01 #overview');
-            img01.style.backgroundImage = `url('data:img/png;base64,${data.img01}')`;
+            img01.src = `data:img/png;base64,${data.img01}`;
 
             let img02 = document.querySelector('#img02 #overview');
-            img02.style.backgroundImage = `url('data:img/png;base64,${data.img02}')`;
+            img02.src = `data:img/png;base64,${data.img02}`;
 
             let img03 = document.querySelector('#img03 #overview');
-            img03.style.backgroundImage = `url('data:img/png;base64,${data.img03}')`;
+            img03.src = `data:img/png;base64,${data.img03}`;
 
             let img04 = document.querySelector('#img04 #overview');
-            img04.style.backgroundImage = `url('data:img/png;base64,${data.img04}')`;
+            img04.src = `data:img/png;base64,${data.img04}`;
         }
     })
 </script>

@@ -224,13 +224,26 @@ def edit():
                        where skuID = %s
         ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, care, date, skuid))
         
-        if file01 and file02 and file03 and file04:
+        if file01:
             cursor.execute('''update inventory
-                            set product_image = %s,
-                            product_img01 = %s,
-                            product_img02 = %s,
+                            set product_image = %s
+                            ''', (main_image, ))
+
+        if file02:
+            cursor.execute('''update inventory
+                            set
+                            product_img01 = %s
+                            ''', (img02, ))
+        if file03:
+            cursor.execute('''update inventory
+                            set 
+                            product_img02 = %s
+                            ''', (img03, ))
+        if file04:
+            cursor.execute('''update inventory
+                            set 
                             product_img03 = %s
-                            ''', (main_image, img02, img03, img04))
+                            ''', (img04, ))
 
         # clearing all the prev searching keywords
         cursor.execute('''
