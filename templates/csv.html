@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{%block body%}
+<link rel="stylesheet" href="../static/header.css">
+<link rel="stylesheet" href="../static/csv.css">
+
+<form action="/csv" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".xlsx" required>
+    <button type="submit">SUBMIT</button>
+</form>
+{%endblock%}

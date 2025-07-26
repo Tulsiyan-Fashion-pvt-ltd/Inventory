@@ -3,7 +3,9 @@ from flask_mysqldb import MySQL
 import uuid
 from datetime import datetime, timedelta
 import base64
-creds = {'Tulsiyan-inventory__@rootUser': '033f48f54a0b6a3bd062'}
+from openpyxl import load_workbook
+
+creds = {'Tulsiyan-inventory__@rootUser': 'password'}
 
 
 app = Flask(__name__)
@@ -48,6 +50,31 @@ saree_materials = [
     "Linen", "Satin", "Organza", "Velvet"
 ]
 
+
+def add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
+                    slen, blen, material, care, date, main_image=None, img02 =None, img03=None, img04=None):
+    cursor = mysql.connection.cursor()
+    cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
+                   product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                   product_img01, product_img02, product_img03, creation_date) values(
+                   %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
+                   (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
+                    slen, blen, material, care, main_image, img02, img03, img04, date))
+    
+    for _ in product_kwords:
+        keyword = _.strip()
+        # print(skuid, keyword)
+        cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
+                       (skuid, keyword))
+        
+    for _ in range(int(product_stock)):
+        productid = product_handler.create_productid()
+        cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
+    mysql.connection.commit()
+    cursor.close()
+
+
+
 @app.route("/add", methods = ['POST', 'GET'])
 def add():
     if session.get('user') == None:
@@ -85,25 +112,8 @@ def add():
 
         date = datetime.now()
         date = date.strftime("%Y-%m-%d")
-        cursor = mysql.connection.cursor()
-        cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
-                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
-                       product_img01, product_img02, product_img03, creation_date) values(
-                       %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
-                       (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
-                        slen, blen, material, care, main_image, img02, img03, img04, date))
-        
-        for _ in product_kwords:
-            keyword = _.strip()
-            cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
-                           (skuid, keyword))
-            
-        for _ in range(int(product_stock)):
-            productid = product_handler.create_productid()
-            cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
-
-        mysql.connection.commit()
-        cursor.close()
+        add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
+                    slen, blen, material, care, date, main_image, img02, img03, img04)
         return redirect('/add')
     
 
@@ -144,10 +154,10 @@ def edit():
             cursor.close()
             # print(data)
             product_details = {
-                'img01': base64.b64encode(data[11]).decode('utf-8'),
-                'img02': base64.b64encode(data[12]).decode('utf-8'),
-                'img03': base64.b64encode(data[13]).decode('utf-8'),
-                'img04': base64.b64encode(data[14]).decode('utf-8'),
+                'img01': base64.b64encode(data[11]).decode('utf-8') if data[11] else None,
+                'img02': base64.b64encode(data[12]).decode('utf-8') if data[12] else None,
+                'img03': base64.b64encode(data[13]).decode('utf-8') if data[13] else None,
+                'img04': base64.b64encode(data[14]).decode('utf-8') if data[14] else None,
                 'title': data[1],
                 'vid': data[0],
                 'desc': data[6],
@@ -227,23 +237,27 @@ def edit():
         if file01:
             cursor.execute('''update inventory
                             set product_image = %s
-                            ''', (main_image, ))
+                            where skuID = %s
+                            ''', (main_image, skuid))
 
         if file02:
             cursor.execute('''update inventory
                             set
                             product_img01 = %s
-                            ''', (img02, ))
+                            where skuID = %s
+                            ''', (img02, skuid))
         if file03:
             cursor.execute('''update inventory
                             set 
                             product_img02 = %s
-                            ''', (img03, ))
+                            where skuID = %s
+                            ''', (img03, skuid))
         if file04:
             cursor.execute('''update inventory
                             set 
                             product_img03 = %s
-                            ''', (img04, ))
+                            where skuID = %s
+                            ''', (img04, skuid))
 
         # clearing all the prev searching keywords
         cursor.execute('''
@@ -285,7 +299,56 @@ def login():
             return redirect('/login')
         
     else:
-        return render_template('login.html')
+        return render_template('login.html', page_name='login')
+
+
+@app.route('/csv', methods=['POST', 'GET'])
+def csv_upload():
+    if request.method == 'GET':
+        return render_template('csv.html', page_name='csv upload')
+    else:
+        file = request.files.get('file')
+
+        if file.filename == '':
+            return "No selected file", 400
+
+        # extension verification
+        filename = str(file.filename)
+        ext = filename.split('.')[1]
+        if (ext != 'xlsx'):
+            return "invalid file of file name has (.) in it"
+
+
+        wb = load_workbook(filename=file)
+        ws = wb.active
+        # Access all images
+        for sheetname in wb.sheetnames:
+            ws = wb[sheetname]
+
+        for i, row in enumerate(ws.iter_rows(values_only=True)):
+            if i > 0:
+                skuid = product_handler.create_sku()
+                title = row[0]
+                vendorid = row[1]
+                product_desc = row[2]
+                product_kwords = row[3].split(', ')
+                product_weight = row[4]
+                original_price = row[5]
+                discounted_price = row[6]
+                product_stock = row[7]
+                slen = row[8]
+                blen = row[9]
+                material = row[10]
+                care = row[11]
+                date = datetime.now().date()
+                print(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
+                    slen, blen, material, care, date)
+                add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
+                    slen, blen, material, care, date)
+                # print(row)
+
+        return redirect('/csv')
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

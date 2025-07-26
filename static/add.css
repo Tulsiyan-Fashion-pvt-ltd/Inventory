@@ -57,3 +57,11 @@ select#material{
     height: 2em;
     padding-left: 1em;
 }
+
+.overview{
+    border: 1px solid black;
+    height: 7em;
+    width: 6em;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

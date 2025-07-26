@@ -12,6 +12,10 @@ header {
     height: 5.63em;
 }
 
+body{
+    overflow: hidden;
+}
+
 h1 span {
     color: #005C83;
 }
@@ -26,10 +30,12 @@ h1 {
 
 main {
     display: flex;
+    width: 100vw;
+    height: 100vh;
 }
 
 #sidebar {
-    height: 90.6dvh;
+    height: 100%;
     width: 20em;
     background-color: #005C83;
     display: flex;
@@ -54,4 +60,7 @@ main {
     width: 100%;
     overflow-y: scroll;
     height: 90.6dvh;
+    background-image: url(./icons/hooter.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
 }
