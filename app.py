@@ -4,13 +4,15 @@ import uuid
 from datetime import datetime, timedelta
 import base64
 from openpyxl import load_workbook
+import os
 
 creds = {'Tulsiyan-inventory__@rootUser': 'password'}
 
 
 app = Flask(__name__)
-app.secret_key = "6129097fee5199dfa20d2ac8d06ba06ec3ad49c2c3a725ed18ab605e122f4d27028df18652e043e855e08f73119797e7c196b9a4141c9cb4da25d28e70f1b59c"
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
+app.secret_key = os.environ.get('SECRET_KEY') 
+# print(os.environ.get('SECRET_KEY') )
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 
 
 # app.config['MYSQL_HOST'] = "skyler.cj44qsu6gnc1.eu-north-1.rds.amazonaws.com"
@@ -20,9 +22,9 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
 # app.config["MYSQL_DB"] = "maria"
 
 
-app.config['MYSQL_HOST'] = "localhost"
+app.config['MYSQL_HOST'] = os.environ.get('DBHOST')
 app.config["MYSQL_USER"] = "root"       
-app.config["MYSQL_PASSWORD"] = "Tulsiyan@farhan962412"
+app.config["MYSQL_PASSWORD"] = os.environ.get('DBPASSWORD')
 app.config["MYSQL_DB"] = "tulsiyandb"
 
 mysql = MySQL(app)
@@ -349,6 +351,12 @@ def csv_upload():
 
         return redirect('/csv')
 
+
+@app.route('/delivery', methods=['POST', 'GET'])
+def delivery():
+    if request.method == 'GET':
+        return render_template('delivery.html', page_name='process delivery')
+    return
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

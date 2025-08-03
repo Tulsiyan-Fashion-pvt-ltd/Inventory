@@ -21,6 +21,10 @@
     background-image: url(../static/icons/csv.png);
 }
 
+#delivery .icon{
+    background-image: url(../static/icons/delivery.png);
+}
+
 main #logo {
     background-image: url(../static//icons/hooter.svg);
     background-repeat: no-repeat;
