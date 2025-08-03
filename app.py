@@ -327,9 +327,11 @@ def csv_upload():
         for sheetname in wb.sheetnames:
             ws = wb[sheetname]
 
+        skus = []
         for i, row in enumerate(ws.iter_rows(values_only=True)):
             if i > 0:
                 skuid = product_handler.create_sku()
+                skus.append(skuid)
                 title = row[0]
                 vendorid = row[1]
                 product_desc = row[2]
@@ -349,7 +351,7 @@ def csv_upload():
                     slen, blen, material, care, date)
                 # print(row)
 
-        return redirect('/csv')
+        return skuid
 
 
 @app.route('/delivery', methods=['POST', 'GET'])
