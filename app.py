@@ -351,13 +351,21 @@ def csv_upload():
                     slen, blen, material, care, date)
                 # print(row)
 
-        return skuid
+        return skus
 
 
 @app.route('/delivery', methods=['POST', 'GET'])
 def delivery():
     if request.method == 'GET':
-        return render_template('delivery.html', page_name='process delivery')
+        cursor = mysql.connection.cursor()
+        cursor.execute('''
+                        select orderID, skuID, productID 
+                        from ready_for_delivery
+                        ''')
+        data = cursor.fetchall()
+        cursor.close()
+        print(data)
+        return render_template('delivery.html', page_name='process delivery', data=data)
     return
 
 if __name__ == "__main__":
