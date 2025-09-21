@@ -318,16 +318,16 @@ def csv_upload():
         filename = str(file.filename)
         ext = filename.split('.')[1]
         if (ext != 'xlsx'):
-            return "invalid file of file name has (.) in it"
+            return "invalid file or file name has (.) in it"
 
 
-        wb = load_workbook(filename=file)
+        wb = load_workbook(filename=file)  #load workbook or xlsx file
         ws = wb.active
         # Access all images
         for sheetname in wb.sheetnames:
             ws = wb[sheetname]
 
-        skus = []
+        skus = []   # list of skus to return and show back on the screen
         for i, row in enumerate(ws.iter_rows(values_only=True)):
             if i > 0:
                 skuid = product_handler.create_sku()
