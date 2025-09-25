@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 import base64
 from openpyxl import load_workbook
 import os
+from helpers import *
 
 creds = {'Tulsiyan-inventory__@rootUser': 'password'}
 
@@ -56,12 +57,27 @@ saree_materials = [
 def add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
                     slen, blen, material, care, date, main_image=None, img02 =None, img03=None, img04=None):
     cursor = mysql.connection.cursor()
+
+    # compressed files
+    if (main_image != None and img02 != None and img03 != None and img04 != None):
+        comp1 = compress_image(main_image)
+        comp2 = compress_image(img02)
+        comp3 = compress_image(img03)
+        comp4 = compress_image(img04)
+    else:
+        comp1 = comp2 = comp3 = comp4 = None
+
     cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
                    product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
                    product_img01, product_img02, product_img03, creation_date) values(
                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
                    (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, main_image, img02, img03, img04, date))
+                    slen, blen, material, care, comp1, comp2, comp3, comp4, date))
+    
+    
+    cursor.execute('''insert into images(skuID, img1, img2, img3, img4)
+                   values(%s, %s, %s, %s, %s)
+                   ''', (skuid, main_image, img02, img03, img04))
     
     for _ in product_kwords:
         keyword = _.strip()
@@ -86,6 +102,7 @@ def add():
         return render_template('add.html', page_name="add products", material=saree_materials)
     else:
         data = request.form
+
         skuid = product_handler.create_sku()
         title = data.get('title').strip()
         vendorid = data.get('vid', 'NULL').strip()
@@ -237,29 +254,58 @@ def edit():
         ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, care, date, skuid))
         
         if file01:
+            comp_img = compress_image(main_image)
+            cursor.execute('''update images
+                            set img1 = %s
+                            where skuID = %s
+                            ''', (main_image, skuid))
+            
             cursor.execute('''update inventory
                             set product_image = %s
                             where skuID = %s
-                            ''', (main_image, skuid))
+                            ''', (comp_img, skuid))
 
         if file02:
+            comp_img = compress_image(img02)
+            cursor.execute('''update images
+                            set 
+                           img2 = %s
+                            where skuID = %s
+                            ''', (img02, skuid))
+            
             cursor.execute('''update inventory
                             set
                             product_img01 = %s
                             where skuID = %s
-                            ''', (img02, skuid))
+                            ''', (comp_img, skuid))
+            
         if file03:
-            cursor.execute('''update inventory
+            comp_img = compress_image(img03)
+            cursor.execute('''update images
                             set 
-                            product_img02 = %s
+                            img3 = %s
                             where skuID = %s
                             ''', (img03, skuid))
-        if file04:
+            
             cursor.execute('''update inventory
+                            set
+                            product_img02 = %s
+                            where skuID = %s
+                            ''', (comp_img, skuid))
+            
+        if file04:
+            comp_img = compress_image(img04)
+            cursor.execute('''update images
                             set 
-                            product_img03 = %s
+                            img4 = %s
                             where skuID = %s
                             ''', (img04, skuid))
+            
+            cursor.execute('''update inventory
+                            set
+                            product_img03 = %s
+                            where skuID = %s
+                            ''', (comp_img, skuid))
 
         # clearing all the prev searching keywords
         cursor.execute('''

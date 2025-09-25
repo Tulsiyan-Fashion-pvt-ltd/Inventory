@@ -10,4 +10,5 @@ MarkupSafe==3.0.2
 mysqlclient==2.2.7
 openpyxl==3.1.5
 packaging==25.0
+pillow==11.3.0
 Werkzeug==3.1.3
