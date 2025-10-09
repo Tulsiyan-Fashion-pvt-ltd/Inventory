@@ -7,7 +7,7 @@ from openpyxl import load_workbook
 import os
 from helpers import *
 
-creds = {'Tulsiyan-inventory__@rootUser': 'password'}
+creds = {'Tulsiyan@rootUser': 'password'}
 
 
 app = Flask(__name__)
@@ -55,7 +55,7 @@ saree_materials = [
 
 
 def add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, date, main_image=None, img02 =None, img03=None, img04=None):
+                    slen, blen, material, color, care, date, main_image=None, img02 =None, img03=None, img04=None):
     cursor = mysql.connection.cursor()
 
     # compressed files
@@ -68,11 +68,11 @@ def add_product(skuid, vendorid, title, product_kwords, original_price, discount
         comp1 = comp2 = comp3 = comp4 = None
 
     cursor.execute('''insert into inventory(skuID, vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
-                   product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                   product_stock, product_details, saree_len, blouse_len, product_material, product_color, product_care, product_image, 
                    product_img01, product_img02, product_img03, creation_date) values(
-                   %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
+                   %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)''', 
                    (skuid, vendorid, title, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, comp1, comp2, comp3, comp4, date))
+                    slen, blen, material, color, care, comp1, comp2, comp3, comp4, date))
     
     
     cursor.execute('''insert into images(skuID, img1, img2, img3, img4)
@@ -115,6 +115,7 @@ def add():
         slen = data.get('slen').strip().strip()
         blen = data.get('blen').strip().strip()
         material = data.get('material').strip().strip()
+        color = data.get('color').strip()
         care = data.get('product-care').strip().strip()
 
         file01 = request.files['img01']
@@ -132,7 +133,7 @@ def add():
         date = datetime.now()
         date = date.strftime("%Y-%m-%d")
         add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, date, main_image, img02, img03, img04)
+                    slen, blen, material, color, care, date, main_image, img02, img03, img04)
         return redirect('/add')
     
 
@@ -164,7 +165,7 @@ def edit():
             cursor = mysql.connection.cursor()
             data = cursor.execute('''
                             select vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
-                       product_stock, product_details, saree_len, blouse_len, product_material, product_care, product_image, 
+                       product_stock, product_details, saree_len, blouse_len, product_material, product_color, product_care, product_image, 
                        product_img01, product_img02, product_img03
                        from inventory where skuID=%s
                        ''', (query, ))
@@ -173,10 +174,10 @@ def edit():
             cursor.close()
             # print(data)
             product_details = {
-                'img01': base64.b64encode(data[11]).decode('utf-8') if data[11] else None,
-                'img02': base64.b64encode(data[12]).decode('utf-8') if data[12] else None,
-                'img03': base64.b64encode(data[13]).decode('utf-8') if data[13] else None,
-                'img04': base64.b64encode(data[14]).decode('utf-8') if data[14] else None,
+                'img01': base64.b64encode(data[12]).decode('utf-8') if data[11] else None,
+                'img02': base64.b64encode(data[13]).decode('utf-8') if data[12] else None,
+                'img03': base64.b64encode(data[14]).decode('utf-8') if data[13] else None,
+                'img04': base64.b64encode(data[15]).decode('utf-8') if data[14] else None,
                 'title': data[1],
                 'vid': data[0],
                 'desc': data[6],
@@ -187,7 +188,8 @@ def edit():
                 'slen': data[7],
                 'blen': data[8],
                 'material': data[9],
-                'care': data[10]
+                'color': data[10],
+                'care': data[11]
             }
 
             cursor = mysql.connection.cursor()
@@ -219,6 +221,7 @@ def edit():
         slen = data.get('slen').strip().strip()
         blen = data.get('blen').strip().strip()
         material = data.get('material').strip().strip()
+        color = data.get('color').strip()
         care = data.get('product-care').strip().strip()
 
         file01 = request.files['img01']
@@ -248,10 +251,11 @@ def edit():
                        saree_len = %s, 
                        blouse_len = %s,
                        product_material = %s,
+                       product_color = %s,
                        product_care = %s,
                        updation_date = %s
                        where skuID = %s
-        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, care, date, skuid))
+        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, color, care, date, skuid))
         
         if file01:
             comp_img = compress_image(main_image)
@@ -388,13 +392,14 @@ def csv_upload():
                 product_stock = row[7]
                 slen = row[8]
                 blen = row[9]
-                material = row[10]
-                care = row[11]
+                material = row[10], 
+                color = row[11]
+                care = row[12]
                 date = datetime.now().date()
                 print(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, date)
+                    slen, blen, material, color, care, date)
                 add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, care, date)
+                    slen, blen, material, color, care, date)
                 # print(row)
 
         return skus

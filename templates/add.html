@@ -15,6 +15,7 @@
         <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK" required>
         <input type="text" id="saree-len" name="slen" placeholder="LENGTH OF SAREE (in meters)" required>
         <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
+        <input type="text" id="color" name="color" placeholder="PRODUCT COLOR" required maxlength="30">
         <select name="material" id="material" required>
             <option value="default" disabled selected>PRODUCT MATERIAL</option>
             {% for item in material %}

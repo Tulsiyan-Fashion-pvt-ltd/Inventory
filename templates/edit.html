@@ -33,6 +33,8 @@
         <input type="text" id="saree-len" name="slen" placeholder="LENGTH OF SAREE (in meters)" required>
         <p class="title">BLOUSE LENGTH (in inches)</p>
         <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
+        <p class="title">PRODUCT COLOR</p>
+        <input type="text" id="color" name="color" placeholder="PRODUCT COLOR" required maxlength="30">
         <p class="title">PRODUCT MATERIAL</p>
         <select name="material" id="material" required>
             <option value="default" selected>PRODUCT MATERIAL</option>
@@ -157,6 +159,9 @@
 
             let blen = document.querySelector('#blouse-len');
             blen.value = data.slen;
+
+            let color = document.querySelector('#color');
+            color.value = data.color;
 
             let material = document.querySelector('#material option');
             material.value = data.material;
