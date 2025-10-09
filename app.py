@@ -64,6 +64,11 @@ def add_product(skuid, vendorid, title, product_kwords, original_price, discount
         comp2 = compress_image(img02)
         comp3 = compress_image(img03)
         comp4 = compress_image(img04)
+
+        main_image = compress_main_image(main_image)
+        img02 = compress_main_image(img02)
+        img03 = compress_main_image(img03)
+        img04 = compress_main_image(img04)
     else:
         comp1 = comp2 = comp3 = comp4 = None
 
@@ -259,10 +264,11 @@ def edit():
         
         if file01:
             comp_img = compress_image(main_image)
+            com_main_img = compress_main_image(main_image)
             cursor.execute('''update images
                             set img1 = %s
                             where skuID = %s
-                            ''', (main_image, skuid))
+                            ''', (com_main_img, skuid))
             
             cursor.execute('''update inventory
                             set product_image = %s
@@ -271,11 +277,12 @@ def edit():
 
         if file02:
             comp_img = compress_image(img02)
+            com_main_img = compress_main_image(img02)
             cursor.execute('''update images
                             set 
                            img2 = %s
                             where skuID = %s
-                            ''', (img02, skuid))
+                            ''', (com_main_img, skuid))
             
             cursor.execute('''update inventory
                             set
@@ -285,11 +292,12 @@ def edit():
             
         if file03:
             comp_img = compress_image(img03)
+            com_main_img = compress_main_image(img03)
             cursor.execute('''update images
                             set 
                             img3 = %s
                             where skuID = %s
-                            ''', (img03, skuid))
+                            ''', (com_main_img, skuid))
             
             cursor.execute('''update inventory
                             set
@@ -299,11 +307,12 @@ def edit():
             
         if file04:
             comp_img = compress_image(img04)
+            com_main_img = compress_main_image(img04)
             cursor.execute('''update images
                             set 
                             img4 = %s
                             where skuID = %s
-                            ''', (img04, skuid))
+                            ''', (com_main_img, skuid))
             
             cursor.execute('''update inventory
                             set
