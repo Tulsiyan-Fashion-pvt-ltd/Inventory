@@ -4,10 +4,10 @@
 <link rel="stylesheet" href="../static/add.css">
 <form method="post" enctype="multipart/form-data">
     <div id="inputs">
-        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required autocomplete="off">
-        <input type="text" id="vendor-id" name="vid" placeholder="VENDOR ID">
-        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION/ DETAILS" required autocomplete="off" maxlength="500">
-        <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required>
+        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required autocomplete="off" maxlength="150">
+        <input type="text" id="vendor-id" name="vid" placeholder="VENDOR ID" maxlength="255">
+        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION/ DETAILS" required autocomplete="off" maxlength="1000">
+        <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required maxlength="255">
         <input type="text" id="weight" name="weight" placeholder="PRODUCT WEIGHT (in gms)" required>
         <input type="text" id="price" name="price" placeholder="₹ ORIGINAL PRODUCT PRICE" required autocomplete="off">
         <input type="text" id="dsc-price" name="dsc-price" placeholder="₹ DISCOUNTED PRODUCT PRICE" required autocomplete="off" >
