@@ -9,6 +9,8 @@ def compress_image(file) -> bytes:
     img.save(return_file, format='JPEG', quality=90, optimize=True)
     return return_file.getvalue()
 
+
+
 def compress_main_image(file) -> bytes:
     print('running compressiong')
     img = Image.open(io.BytesIO(file))   # making the file binary object treating as file in the memory
