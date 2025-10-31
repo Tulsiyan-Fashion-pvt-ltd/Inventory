@@ -11,16 +11,7 @@ creds = {'Tulsiyan@rootUser': 'password'}
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY') 
-# print(os.environ.get('SECRET_KEY') )
-# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1)
-
-
-# app.config['MYSQL_HOST'] = "skyler.cj44qsu6gnc1.eu-north-1.rds.amazonaws.com"
-# app.config['MYSQL_PORT'] = 3306
-# app.config["MYSQL_USER"] = "admin"       
-# app.config["MYSQL_PASSWORD"] = "68e30d55846e57ec3ac9be24a9a74bd823933782"
-# app.config["MYSQL_DB"] = "maria"
+app.secret_key = os.environ.get('SECRET_KEY')
 
 
 app.config['MYSQL_HOST'] = os.environ.get('DBHOST')
@@ -95,6 +86,7 @@ def add_product(skuid, vendorid, title, product_kwords, original_price, discount
         cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
     mysql.connection.commit()
     cursor.close()
+    return
 
 
 
@@ -429,4 +421,4 @@ def delivery():
     return
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8000, host='0.0.0.0')
+    app.run(debug=True, port=5000, host='0.0.0.0')
