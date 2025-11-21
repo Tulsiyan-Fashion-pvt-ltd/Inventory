@@ -38,7 +38,7 @@ class product_handler:
 
 
 saree_materials = [
-    "Banarasi Silk", "Kanchipuram Silk", "Tussar Silk", "Mysore Silk",
+    "Banarasi Silk", "Kanjivaram Silk", "Tussar Silk", "Mysore Silk",
     "Handloom Cotton", "Chanderi Cotton", "Tant Cotton",
     "Georgette", "Chiffon", "Crepe", "Net", 
     "Linen", "Satin", "Organza", "Velvet"
@@ -115,16 +115,14 @@ def add():
         color = data.get('color').strip()
         care = data.get('product-care').strip().strip()
 
-        file01 = request.files['img01']
-        main_image = file01.read()
+        file01 = request.files.get('img01')
+        file02 = request.files.get('img02')
+        file03 = request.files.get('img03')
+        file04 = request.files.get('img04')
 
-        file02 = request.files['img02']
+        main_image = file01.read()
         img02 = file02.read()
-        
-        file03 = request.files['img03']
         img03 = file03.read()
-        
-        file04 = request.files['img04']
         img04 = file04.read()
 
         date = datetime.now()

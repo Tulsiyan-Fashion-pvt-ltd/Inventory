@@ -1,7 +1,10 @@
-from PIL import Image
+from PIL import Image, ImageFile
 import io
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 
 def compress_image(file) -> bytes:
+    
     print('running compressiong')
     img = Image.open(io.BytesIO(file)).convert('RGB')   # making the file binary object treating as file in the memory
     return_file = io.BytesIO()
