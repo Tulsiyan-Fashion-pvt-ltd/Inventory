@@ -1,3 +1,4 @@
+import uuid
 from PIL import Image, ImageFile
 import io
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -21,3 +22,11 @@ def compress_main_image(file) -> bytes:
     img.thumbnail((800, 800))
     img.save(return_file, format='WEBP', quality=100, optimize=True)
     return return_file.getvalue()
+
+
+class product_handler:
+    def create_sku():
+        return 'sku-'+str(uuid.uuid4())[:13]
+
+    def create_productid():
+        return str(uuid.uuid4())[:13]+"-"+str(int(uuid.uuid4()))[:6]
