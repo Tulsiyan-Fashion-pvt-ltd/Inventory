@@ -49,6 +49,47 @@ main #logo {
     margin: 5em 0em;
 }
 
+.overview-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.5em;   /* 🔥 Everything aligns perfectly now */
+}
+
+/* Overview title */
+.overview {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #0f232b;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+/* Lower section */
+.lower-section {
+    display: flex;
+    gap: 1.5em;
+}
+
+/* Cards */
+.lower-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #152931;
+    color: white;
+    width: 15em;
+    height: 5em;
+    padding: 3em;
+    border-radius: 1em;
+    box-shadow: 0 0.25em 0.8em rgba(0, 0,0,0.15);
+}
+
+.white-card {
+    background: white;
+    color: #000;
+}
+
 .button{
     display: flex;
     justify-content: center;

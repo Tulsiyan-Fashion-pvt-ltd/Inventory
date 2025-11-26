@@ -1,32 +1,46 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block body %}
+<link rel="stylesheet" href="../static/homepage.css" />
 
-{% block body %}
-    <link rel="stylesheet" href="../static/homepage.css">
+<div id="upper-section">
+  <a id="add" class="button" href="/add">
+    <div class="icon"></div>
+    <h3 class="desc">Add</h3>
+  </a>
 
-    <div id="upper-section">
-        <a id="add" class="button" href="/add">
-            <div class="icon"></div>
-            <h3 class="desc">Add</h3>
-        </a>
+  <a id="edit" class="button" href="/edit">
+    <div class="icon"></div>
+    <h3 class="desc">Edit</h3>
+  </a>
+  <a id="draft" class="button" href="/draft">
+    <div class="icon"></div>
+    <h3 class="desc">Draft</h3>
+  </a>
 
-        <a id="edit" class="button" href="/edit">
-            <div class="icon"></div>
-            <h3 class="desc">Edit</h3>
-        </a>
-        <a id="draft" class="button" href="/draft">
-            <div class="icon"></div>
-            <h3 class="desc">Draft</h3>
-        </a>
+  <a href="/csv" id="csv" class="button">
+    <div class="icon"></div>
+    <h3 class="desc">XLSX</h3>
+  </a>
 
-        <a href="/csv" id="csv" class="button">
-            <div class="icon"></div>
-            <h3 class="desc">XLSX</h3>
-        </a>
-
-        <a href="/delivery" id="delivery" class="button">
-             <div class="icon"></div>
-            <h3 class="desc">Process Delivery</h3>
-        </a>
+  <a href="/delivery" id="delivery" class="button">
+    <div class="icon"></div>
+    <h3 class="desc">Process Delivery</h3>
+  </a>
+</div>
+<div class="overview-wrapper">
+  <div class="overview">Overview</div>
+  <div class="lower-section">
+    <div class="lower-card">
+      <span>Total Users</span>
+      <span class="value">{{usr_count}}</span>
     </div>
+    <div class="lower-card">
+      <span>Total SKU</span>
+      <span class="value">{{sku_count}}</span>
+    </div>
+    <div class="lower-card white-card">
+      <span>Revenue (MTD)</span>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
