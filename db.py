@@ -49,3 +49,27 @@ def add_product(skuid, vendorid, title, product_kwords, original_price, discount
     mysql.connection.commit()
     cursor.close()
     return
+
+
+#fetching the total numbers of the user count
+def fetch_ttl_users():
+    cursor = mysql.connection.cursor()
+    cursor.execute('''select count(userID) from user''')
+    count = cursor.fetchone()
+    if count:
+        count = count[0]
+    else:
+        return 'error'
+    return  count
+
+
+# fetching the ttl numbers of skuids
+def fetch_sku_count():
+    cursor = mysql.connection.cursor()
+    cursor.execute('''select count(skuID) from inventory''')
+    count = cursor.fetchone()
+    if count:
+        count = count[0]
+    else:
+        return 'error'
+    return count

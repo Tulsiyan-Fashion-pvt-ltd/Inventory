@@ -24,7 +24,10 @@ def index():
     if session.get('user') == None:
         return redirect('/login')
 
-    return render_template('index.html', page_name="homepage")
+    user_count = fetch_ttl_users()
+    sku_count = fetch_sku_count()
+
+    return render_template('index.html', page_name="homepage", usr_count=user_count, sku_count=sku_count)
 
 
 @page.route("/add", methods = ['POST', 'GET'])
