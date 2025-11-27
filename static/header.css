@@ -37,11 +37,59 @@ main {
 #sidebar {
     height: 100%;
     width: 20em;
-    background-color: #005C83;
+    background-color: #46575E;
     display: flex;
     flex-flow: column;
     align-items: center;
 }
+@media(max-width:56em ){
+    #sidebar{
+        width:6em;
+        align-items: flex-start;
+        padding: 1em;
+    }
+    .lower-section{
+        justify-content: center;
+    }
+    .lower-card{
+        width: 18em;
+    }
+}
+@media(max-width:37em){
+    #sidebar{
+        width:20em;
+        height:100%;
+        position: fixed;
+        top: 0;
+        left: -20em;
+        transition: left 0.3s ease;
+    }
+    .lower-section{
+        flex-direction:column;
+        align-items: center;
+        padding: 1em;
+    }
+    .lower-card{
+        width: 20em;
+        max-width: 22em;
+        height: auto;
+        padding: 2em;
+    }
+    .overview-wrapper{
+        margin-top: 0.5em;
+        padding: 0;
+        display: flex;
+        flex-direction:column ;
+        align-items: center;
+    }
+    .overview{
+        text-align: left;
+        width: 100%;
+        margin-left: 3em;
+    }
+}
+
+
 
 #shop-icon {
     height: 7em;
