@@ -40,6 +40,7 @@ main #logo {
     align-items: center;
     height: 100%;
     width: 100%;
+    
 }
 
 #upper-section {
@@ -51,12 +52,11 @@ main #logo {
 
 .overview-wrapper {
     width: 100%;
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
-    padding-left: 1.5em;   /* 🔥 Everything aligns perfectly now */
+    padding-left: 1.5em;  
 }
-
-/* Overview title */
 .overview {
     font-size: 1.5em;
     font-weight: 700;
@@ -65,13 +65,13 @@ main #logo {
     text-align: left;
 }
 
-/* Lower section */
 .lower-section {
     display: flex;
     gap: 1.5em;
+    padding: 1.5em;
+    flex-wrap: wrap;
 }
 
-/* Cards */
 .lower-card {
     display: flex;
     flex-direction: column;
