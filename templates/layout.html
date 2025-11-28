@@ -1,29 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="/static/header.css">
-    <link rel="shortcut icon" href="/static/icons/hooter.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/header.css" />
+    <link
+      rel="shortcut icon"
+      href="/static/icons/hooter.ico"
+      type="image/x-icon"
+    />
     <title>Hooter - {{page_name}}</title>
-</head>
-<body>
+  </head>
+  <script src="/static/scripts/sidebar.js"></script>
+  <body>
     <header>
-        <a id="logo" href="/" style="text-decoration: none; color: black;"><h1><span>H</span>OOTER</h1></a>
+      <a id="logo" href="/" style="text-decoration: none; color: black"
+        ><h1><span>H</span>OOTER</h1></a
+      >
 
-        <div id="greet">Hi, editor</div>
+      <div id="greet">Hi, editor</div>
     </header>
 
     <main>
-        <div id="sidebar">
-            <div id="shop-icon"></div>
-        </div>
+      <div id="sidebar">
+        <div id="shop-icon"></div>
+        <button id="toggle-btn">☰</button>
+      </div>
 
-        <div id="main-container">
-            {% block body %}
-            {% endblock %}
-        </div>
+      <div id="main-container">{% block body %} {% endblock %}</div>
     </main>
-</body>
+  </body>
 </html>

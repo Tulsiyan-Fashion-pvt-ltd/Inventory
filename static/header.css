@@ -37,55 +37,50 @@ main {
 #sidebar {
     height: 100%;
     width: 20em;
+    width: clamp(12em,20vw,20em);
+    left: 0;
     background-color: #46575E;
     display: flex;
     flex-flow: column;
     align-items: center;
+    transition: left 0.3s ease,0.3s ease;
+    position: relative;
 }
-@media(max-width:56em ){
-    #sidebar{
-        width:6em;
-        align-items: flex-start;
-        padding: 1em;
-    }
-    .lower-section{
-        justify-content: center;
-    }
-    .lower-card{
-        width: 18em;
-    }
+#sidebar.collapsed{
+    width:4em;
+    left:0;
+    overflow: hidden;
+    transition: width 0.3s ease,left 0.3s ease;
+}
+.sidebar-open{
+    left: 0;
+}
+#toggle-btn{
+    align-self: center;
+    margin: 1em 0 ;
+    font-size: 2em;
+    color: white;
+    background: none;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+}
+#sidebar.collapsed #toggle-btn {
+    margin: 1em 0;
 }
 @media(max-width:37em){
     #sidebar{
-        width:20em;
-        height:100%;
-        position: fixed;
-        top: 0;
-        left: -20em;
-        transition: left 0.3s ease;
+        position: relative;
+        top:0;
+        left:0;
+        width:4em;
+        height:auto;
+        transition: width 0.3s ease;
+        background-color: #46575E;
+        overflow: hidden;
     }
-    .lower-section{
-        flex-direction:column;
-        align-items: center;
-        padding: 1em;
-    }
-    .lower-card{
+    #sidebar:not(.collapsed){
         width: 20em;
-        max-width: 22em;
-        height: auto;
-        padding: 2em;
-    }
-    .overview-wrapper{
-        margin-top: 0.5em;
-        padding: 0;
-        display: flex;
-        flex-direction:column ;
-        align-items: center;
-    }
-    .overview{
-        text-align: left;
-        width: 100%;
-        margin-left: 3em;
     }
 }
 
