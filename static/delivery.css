@@ -1,7 +1,66 @@
-table{
-    border: 1px solid black;
+* {
+    box-sizing: border-box;
 }
 
-tr{
-    border-top: 1px solid black;
+.styled-table {
+    margin: 1.25em auto;
+    width: 90%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: 0.0625em solid #333;
+    background: transparent;
+    font-size: 1em ;    
+    line-height: 1 ;
+}
+
+
+.styled-table thead tr {
+    background-color: #444;
+    color: #fff;
+    text-align: center;
+}
+
+.styled-table th {
+    padding: 0.4em;
+    border: 0.0625em solid #333;
+    font-weight: 700;
+    text-align: center;
+}
+
+.styled-table td {
+    padding-top: 0 ;
+    padding-bottom: 0 ;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+
+    height: 1em ;          
+    line-height: 1em ;    
+
+    font-size: 1em ;       
+    white-space: nowrap ;
+    overflow: hidden ;
+
+    text-align: center;
+    vertical-align: middle;
+    border: 0.0625em solid #333;
+    background: transparent;
+}
+
+
+.styled-table tbody tr:hover td {
+    background-color: rgba(0,0,0,0.08);
+    cursor: pointer;
+}
+
+
+@media (max-width: 37em) {
+    .styled-table {
+        width: 98%;
+        font-size: 0.65em ;
+    }
+
+    .styled-table td {
+        height: 1.1em ;
+        line-height: 1.1em ;
+    }
 }
