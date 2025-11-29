@@ -63,5 +63,5 @@ select#material{
     height: 7em;
     width: 6em;
     background-repeat: no-repeat;
-    background-size: cover;
+    object-fit: contain;
 }

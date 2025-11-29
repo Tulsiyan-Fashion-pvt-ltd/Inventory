@@ -54,6 +54,8 @@ def add():
         material = data.get('material').strip().strip()
         color = data.get('color').strip()
         care = data.get('product-care').strip().strip()
+        art = data.get('art').strip()
+        stitch = data.get('stitch').strip()
 
         file01 = request.files.get('img01')
         file02 = request.files.get('img02')
@@ -68,7 +70,7 @@ def add():
         date = datetime.now()
         date = date.strftime("%Y-%m-%d")
         add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, color, care, date, main_image, img02, img03, img04)
+                    slen, blen, material, color, care, art, stitch, date, main_image, img02, img03, img04)
         return redirect('/add')
     
 
@@ -100,7 +102,7 @@ def edit():
             data = cursor.execute('''
                             select vendor_id, product_desc, original_price, disc_price, product_weight_gm, 
                        product_stock, product_details, saree_len, blouse_len, product_material, product_color, product_care, product_image, 
-                       product_img01, product_img02, product_img03
+                       product_img01, product_img02, product_img03, product_art, product_stitch
                        from inventory where skuID=%s
                        ''', (query, ))
 
@@ -123,7 +125,9 @@ def edit():
                 'blen': data[8],
                 'material': data[9],
                 'color': data[10],
-                'care': data[11]
+                'care': data[11],
+                'art': data[16],
+                'stitch': data[17]
             }
 
             cursor = mysql.connection.cursor()
@@ -157,6 +161,8 @@ def edit():
         material = data.get('material').strip().strip()
         color = data.get('color').strip()
         care = data.get('product-care').strip().strip()
+        art = data.get('art').strip()
+        stitch= data.get('stitch').strip()
 
         file01 = request.files['img01']
         main_image = file01.read()
@@ -187,9 +193,11 @@ def edit():
                        product_material = %s,
                        product_color = %s,
                        product_care = %s,
+                       product_art = %s,
+                       product_stitch = %s,
                        updation_date = %s
                        where skuID = %s
-        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, color, care, date, skuid))
+        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, color, care, art, stitch, date, skuid))
         
         if file01:
             comp_img = compress_image(main_image)
@@ -333,11 +341,13 @@ def csv_upload():
                 material = row[10], 
                 color = row[11]
                 care = row[12]
+                art = row[13]
+                stitch = row[14]
                 date = datetime.now().date()
                 print(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, color, care, date)
+                    slen, blen, material, color, care, art, stitch, date)
                 add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, color, care, date)
+                    slen, blen, material, color, care, art, stitch, date)
                 # print(row)
 
         return skus
