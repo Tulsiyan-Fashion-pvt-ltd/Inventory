@@ -2,7 +2,6 @@ from flask import Blueprint, url_for, redirect, request, jsonify, render_templat
 from datetime import datetime, timedelta
 import base64
 from openpyxl import load_workbook
-import os
 from helpers import *
 from db import *
 
