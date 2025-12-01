@@ -187,7 +187,6 @@ def edit():
                        product_weight_gm = %s,
                        original_price = %s, 
                        disc_price = %s, 
-                       product_stock = %s, 
                        saree_len = %s, 
                        blouse_len = %s,
                        product_material = %s,
@@ -197,7 +196,7 @@ def edit():
                        product_stitch = %s,
                        updation_date = %s
                        where skuID = %s
-        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, product_stock, slen, blen, material, color, care, art, stitch, date, skuid))
+        ''', (title, vendorid, product_desc, product_weight, original_price, discounted_price, slen, blen, material, color, care, art, stitch, date, skuid))
         
         if file01:
             comp_img = compress_image(main_image)
@@ -261,18 +260,27 @@ def edit():
         cursor.execute('''
                             delete from searching_keywords where skuID = %s''', (skuid, ))
 
-        # assigning new skuids for the new stock
+        # fetching the already existing productids
         cursor.execute('''
-                            delete from products where skuID = %s''', (skuid, ))
+                        select count(productID) from products where skuID = %s
+                       ''', (skuid, ))
+        
+        existing_productids = cursor.fetchone()[0]
+        
         for _ in product_kwords:
             keyword = _.strip()
 
             cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
                            (skuid, keyword))
-            
-        for _ in range(int(product_stock)):
-            productid = product_handler.create_productid()
-            cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
+        
+        if int(product_stock) > existing_productids:
+            cursor.execute('''update inventory
+                           set product_stock=%s
+                           where skuID=%s''', (product_stock, skuid))
+
+            for _ in range(int(product_stock) - existing_productids):
+                productid = product_handler.create_productid()
+                cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
 
         mysql.connection.commit()
         cursor.close()
