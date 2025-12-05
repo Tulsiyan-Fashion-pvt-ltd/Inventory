@@ -45,6 +45,12 @@
 
         <p class="title">PRODUCT CARE</p>
         <input type="text" id="care" name="product-care" placeholder="PRODUCT CARE" required>
+
+        <p class="title">Product Art</p>
+        <input type="text" id="art" name="art" placeholder="Product Art" required>
+
+        <p class="title">Product Stitch</p>
+        <input type="text" id="stitch" name="stitch" placeholder="Product Stitch" required>
     </div>
 
     <div id="right-section">
@@ -169,6 +175,12 @@
 
             let care = document.querySelector('#care');
             care.value = data.care;
+
+            let art = document.querySelector('#art');
+            art.value = data.art;
+
+            let stitch = document.querySelector('#stitch');
+            stitch.value = data.stitch;
 
             let img01 = document.querySelector('#img01 .overview');
             img01.src = `data:img/png;base64,${data.img01}`;
