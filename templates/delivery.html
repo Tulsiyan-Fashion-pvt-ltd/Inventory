@@ -1,27 +1,64 @@
-{%extends 'layout.html'%} {%block body%}
-<link rel="stylesheet" href="../static/delivery.css" />
+{% extends 'layout.html' %} {% block body %}
 
-<table class="styled-table" aria-label="Orders table">
-  <colgroup>
-    <col style="width: 30%" />
-    <col style="width: 30%" />
-    <col style="width: 30%" />
-  </colgroup>
-  <thead>
-    <tr>
-      <th>Order ID</th>
-      <th>Sku ID</th>
-      <th>Product ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    {%for item in data%}
-    <tr>
-      <td>{{item[0]}}</td>
-      <td>{{item[1]}}</td>
-      <td>{{item[2]}}</td>
-    </tr>
-    {%endfor%}
-  </tbody>
-</table>
-{%endblock%}
+<link rel="stylesheet" href="../static/delivery.css" />
+<script src="../static/scripts/table_sorter.js"></script>
+
+<div
+  class="delivery-wrapper"
+  data-table="deliveryTable"
+  data-search="deliverySearch"
+  data-search-col="0"
+>
+  <div class="delivery-header">
+    <h2>All Orders</h2>
+
+    <div class="header-right">
+      <span class="order-count">Total: {{ data|length }}</span>
+      <input
+        type="text"
+        id="deliverySearch"
+        class="search-box"
+        placeholder="Search orders..."
+      />
+    </div>
+  </div>
+  <table class="styled-table" id="deliveryTable">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>SKU ID</th>
+        <th>Product ID</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- Sample test data -->
+      <tr>
+        <td>ORD-001</td>
+        <td>SKU-7789</td>
+        <td>PRD-120</td>
+      </tr>
+      <tr>
+        <td>ORD-002</td>
+        <td>SKU-9921</td>
+        <td>PRD-228</td>
+      </tr>
+      <tr>
+        <td>ORD-003</td>
+        <td>SKU-5551</td>
+        <td>PRD-900</td>
+      </tr>
+
+      <!-- Dynamic Database Data -->
+      {% for item in data %}
+      <tr>
+        <td>{{ item[0] }}</td>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "layout.html"%} {%block body%}
+<link rel="stylesheet" href="../static/customers.css" />
+<script src="../static/scripts/table_sorter.js"></script>
+
+<div
+  class="customer-wrapper"
+  data-table="customerTable"
+  data-search="searchInput"
+>
+  <div class="custom-header">
+    <h2>All Customers</h2>
+    <div class="header-right">
+      <span class="user-count">Total: {{data|length}}</span>
+      <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="search users..."
+      />
+    </div>
+  </div>
+  <table class="styled-table" id="customerTable">
+    <thead>
+      <tr>
+        <th>CX ID</th>
+        <th>Name</th>
+        <th>Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cx in data %}
+      <tr>
+        <td>{{ cx[0] }}</td>
+        <td>{{ cx[1] }}</td>
+        <td>{{ cx[2] }}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</div>
+{%endblock%}
