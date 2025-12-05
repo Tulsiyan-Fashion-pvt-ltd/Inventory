@@ -356,3 +356,12 @@ def delivery():
         print(data)
         return render_template('delivery.html', page_name='process delivery', data=data)
     return
+
+@page.route('/customers')
+def fetch_all_cx():
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT userID, user_name,user_number FROM `user`')
+    data = cursor.fetchall()
+    cursor.close()
+    print("Fetched users: ", data)
+    return render_template('customers.html',data=data,page_name='customers')
