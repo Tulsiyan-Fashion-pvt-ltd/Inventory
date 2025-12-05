@@ -1,83 +1,194 @@
-{% extends "layout.html" %}
-
-{% block body %}
-<link rel="stylesheet" href="../static/add.css">
+{% extends "layout.html" %} {% block body %}
+<link rel="stylesheet" href="../static/add.css" />
 <form method="post" enctype="multipart/form-data">
-    <div id="inputs">
-        <input type="text" id="title" name="title" placeholder="PRODUCT TITLE" required autocomplete="off" maxlength="150">
-        <input type="text" id="vendor-id" name="vid" placeholder="VENDOR ID" maxlength="255">
-        <input type="text" id="desc" name="desc" placeholder="PRODUCT DESCRIPTION/ DETAILS" required autocomplete="off" maxlength="1000">
-        <input type="text" id="keywords" name="keywords" placeholder="PRODUCT KEYWORDS" required maxlength="255">
-        <input type="text" id="weight" name="weight" placeholder="PRODUCT WEIGHT (in gms)" required>
-        <input type="text" id="price" name="price" placeholder="₹ ORIGINAL PRODUCT PRICE" required autocomplete="off">
-        <input type="text" id="dsc-price" name="dsc-price" placeholder="₹ DISCOUNTED PRODUCT PRICE" required autocomplete="off" >
-        <input type="text" id="dsc-percentage" name="dsc-prctng" placeholder="DISCOUNT PERCENTAGE %" required autocomplete="off" disabled>
-        <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK" required>
-        <input type="text" id="saree-len" name="slen" placeholder="LENGTH OF SAREE (in meters)" required>
-        <input type="text" id="blouse-len" name="blen" placeholder="LENGTH OF BLOUSE (in inch)" required>
-        <input type="text" id="color" name="color" placeholder="PRODUCT COLOR" required maxlength="30">
-        <select name="material" id="material" required>
-            <option value="default" disabled selected>PRODUCT MATERIAL</option>
-            {% for item in material %}
-                <option value="{{ item }}">{{ item }}</option>
-            {% endfor %}
-        </select>
-        <input type="text" id="care" name="product-care" placeholder="PRODUCT CARE" required>
+  <div id="inputs">
+    <input
+      type="text"
+      id="title"
+      name="title"
+      placeholder="PRODUCT TITLE"
+      required
+      autocomplete="off"
+      maxlength="150"
+    />
+    <input
+      type="text"
+      id="vendor-id"
+      name="vid"
+      placeholder="VENDOR ID"
+      maxlength="255"
+    />
+    <input
+      type="text"
+      id="desc"
+      name="desc"
+      placeholder="PRODUCT DESCRIPTION/ DETAILS"
+      required
+      autocomplete="off"
+      maxlength="1000"
+    />
+    <input
+      type="text"
+      id="keywords"
+      name="keywords"
+      placeholder="PRODUCT KEYWORDS"
+      required
+      maxlength="255"
+    />
+    <input
+      type="text"
+      id="weight"
+      name="weight"
+      placeholder="PRODUCT WEIGHT (in gms)"
+      required
+    />
+    <input
+      type="text"
+      id="price"
+      name="price"
+      placeholder="₹ ORIGINAL PRODUCT PRICE"
+      required
+      autocomplete="off"
+    />
+    <input
+      type="text"
+      id="dsc-price"
+      name="dsc-price"
+      placeholder="₹ DISCOUNTED PRODUCT PRICE"
+      required
+      autocomplete="off"
+    />
+    <input
+      type="text"
+      id="dsc-percentage"
+      name="dsc-prctng"
+      placeholder="DISCOUNT PERCENTAGE %"
+      required
+      autocomplete="off"
+      disabled
+    />
+    <input
+      type="text"
+      id="stock"
+      name="stock"
+      placeholder="PRODUCT STOCK"
+      required
+    />
+    <input
+      type="text"
+      id="saree-len"
+      name="slen"
+      placeholder="LENGTH OF SAREE (in meters)"
+      required
+    />
+    <input
+      type="text"
+      id="blouse-len"
+      name="blen"
+      placeholder="LENGTH OF BLOUSE (in inch)"
+      required
+    />
+    <input
+      type="text"
+      id="color"
+      name="color"
+      placeholder="PRODUCT COLOR"
+      required
+      maxlength="30"
+    />
+    <select name="material" id="material" required>
+      <option value="default" disabled selected>PRODUCT MATERIAL</option>
+      {% for item in material %}
+      <option value="{{ item }}">{{ item }}</option>
+      {% endfor %}
+    </select>
+    <input
+      type="text"
+      id="care"
+      name="product-care"
+      placeholder="PRODUCT CARE"
+      required
+    />
+  </div>
+
+  <div id="right-section">
+    <div id="img01">
+      <img class="overview" src="#" alt="image" /><input
+        type="file"
+        name="img01"
+        id="img-input01"
+        class="choose-image"
+        accept="image/*"
+        required
+      />
+    </div>
+    <div id="img02">
+      <img class="overview" src="#" alt="image" /><input
+        type="file"
+        name="img02"
+        id="img-input02"
+        class="choose-image"
+        accept="image/*"
+        required
+      />
+    </div>
+    <div id="img03">
+      <img class="overview" src="#" alt="image" /><input
+        type="file"
+        name="img03"
+        id="img-input03"
+        class="choose-image"
+        accept="image/*"
+        required
+      />
+    </div>
+    <div id="img04">
+      <img class="overview" src="#" alt="image" /><input
+        type="file"
+        name="img04"
+        id="img-input04"
+        class="choose-image"
+        accept="image/*"
+        required
+      />
     </div>
 
-    <div id="right-section">
-        <div id="img01">
-            <img class="overview" src="#" alt="image"><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*"  required>
-        </div>
-        <div id="img02">
-            <img class="overview" src="#" alt="image"><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*" required>
-        </div>
-        <div id="img03">
-            <img class="overview" src="#" alt="image"><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*" required>
-        </div>
-        <div id="img04">
-            <img class="overview" src="#" alt="image"><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*" required>
-        </div>
-
-        <button id="submit" type="submit">UPLOAD PRODUCT DETAILS</button>
-    </div>
+    <button id="submit" type="submit">UPLOAD PRODUCT DETAILS</button>
+  </div>
 </form>
 
-
 <script>
-    function percentage(){
-        let originalPrice = document.querySelector('#price');
-        let discounted_price = document.querySelector('#dsc-price');
-        let percent = document.querySelector('#dsc-percentage');
+  function percentage() {
+    let originalPrice = document.querySelector("#price");
+    let discounted_price = document.querySelector("#dsc-price");
+    let percent = document.querySelector("#dsc-percentage");
 
-        let array = [originalPrice, discounted_price, percent];
+    let array = [originalPrice, discounted_price, percent];
 
-        document.addEventListener('keyup', event => {
-            if (array.includes(event.target)){
-                
-                let value = Number(event.target.value);
-                console.log(value)
-                if(Number.isNaN(value)){
-                    event.target.style.outline = '2px solid red';
-                }
-                else{
-                    event.target.style.outline = 'none';
+    document.addEventListener("keyup", (event) => {
+      if (array.includes(event.target)) {
+        let value = Number(event.target.value);
+        console.log(value);
+        if (Number.isNaN(value)) {
+          event.target.style.outline = "2px solid red";
+        } else {
+          event.target.style.outline = "none";
 
-                    //<!-- writing the actual code now -->
-                    //<!-- calculate percentage and  display -->
-                    
-                    let ttlPrice = originalPrice.value;
-                    let disc = discounted_price.value;
-                    let result = percent.value;
+          //<!-- writing the actual code now -->
+          //<!-- calculate percentage and  display -->
 
-                    result = Math.trunc((100 - ((disc/ttlPrice)*100))*100)/100;
-                    percent.value = 'Discount '+result+' %';
-                }
-            }
-        })
-    }
+          let ttlPrice = originalPrice.value;
+          let disc = discounted_price.value;
+          let result = percent.value;
 
-    percentage();
+          result = Math.trunc((100 - (disc / ttlPrice) * 100) * 100) / 100;
+          percent.value = "Discount " + result + " %";
+        }
+      }
+    });
+  }
+
+  percentage();
 </script>
 
 <script src="../static/scripts/image_overview.js"></script>

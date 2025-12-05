@@ -360,8 +360,18 @@ def delivery():
 @page.route('/customers')
 def fetch_all_cx():
     cursor = mysql.connection.cursor()
-    cursor.execute('SELECT userID, user_name,user_number FROM `user`')
+    cursor.execute('''SELECT userID, user_name,user_number FROM user''')
     data = cursor.fetchall()
     cursor.close()
     print("Fetched users: ", data)
     return render_template('customers.html',data=data,page_name='customers')
+
+@page.route('/sku')
+def fetch_all_sku():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT skuID, productID FROM products")
+    data = cursor.fetchall()
+    cursor.close()
+    print("Fetched SKUs:", data)
+    return render_template('sku.html', data=data, page_name='sku')
+

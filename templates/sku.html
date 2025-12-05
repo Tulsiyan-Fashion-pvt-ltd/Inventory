@@ -1,0 +1,64 @@
+{% extends "layout.html" %} {% block body %}
+<link rel="stylesheet" href="../static/sku.css" />
+<script src="../static/scripts/table_sorter.js"></script>
+
+<div class="custom-wrapper" data-table="skuTable" data-search="searchInput">
+  <div class="custom-header">
+    <h2>All SKUs</h2>
+
+    <div class="header-right">
+      <span class="user-count">Total: {{ data|length }}</span>
+      <input
+        type="text"
+        id="searchInput"
+        class="search-box"
+        placeholder="search skus..."
+      />
+    </div>
+  </div>
+
+  <table class="styled-table" id="skuTable">
+    <thead>
+      <tr>
+        <th>SKU ID</th>
+        <th>PRODUCT IMAGE</th>
+        <th>PRODUCT DETAILS</th>
+        <th>PRICE</th>
+        <th>PRODUCT ID</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for sku in data %}
+      <tr>
+        <td>{{ sku[0] }}</td>
+
+        <!-- FUTURE: product image -->
+        <td>
+          <img
+            src="../static/uploads/{{ sku[2] if sku|length > 2 else 'placeholder.png' }}"
+            alt="SKU Image"
+            style="
+              width: 55px;
+              height: 55px;
+              border-radius: 6px;
+              object-fit: cover;
+            "
+          />
+        </td>
+
+        <!-- FUTURE: product details -->
+        <td>{{ sku[3] if sku|length > 3 else "Coming soon..." }}</td>
+
+        <!-- FUTURE: price -->
+        <td>
+          {% if sku|length > 4 %} ₹ {{ sku[4] }} {% else %} ₹ — {% endif %}
+        </td>
+
+        <td>{{ sku[1] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
