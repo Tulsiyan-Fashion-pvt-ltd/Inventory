@@ -1,8 +1,6 @@
 {% extends "layout.html" %} {% block body %}
 <link rel="stylesheet" href="../static/add.css" />
-
 <form method="post" enctype="multipart/form-data">
-  <!-- LEFT SECTION — TEXT INPUTS -->
   <div id="inputs">
     <input
       type="text"
@@ -13,7 +11,6 @@
       autocomplete="off"
       maxlength="150"
     />
-
     <input
       type="text"
       id="vendor-id"
@@ -21,7 +18,6 @@
       placeholder="VENDOR ID"
       maxlength="255"
     />
-
     <input
       type="text"
       id="desc"
@@ -31,7 +27,6 @@
       autocomplete="off"
       maxlength="1000"
     />
-
     <input
       type="text"
       id="keywords"
@@ -40,7 +35,6 @@
       required
       maxlength="255"
     />
-
     <input
       type="text"
       id="weight"
@@ -48,7 +42,6 @@
       placeholder="PRODUCT WEIGHT (in gms)"
       required
     />
-
     <input
       type="text"
       id="price"
@@ -57,7 +50,6 @@
       required
       autocomplete="off"
     />
-
     <input
       type="text"
       id="dsc-price"
@@ -66,7 +58,6 @@
       required
       autocomplete="off"
     />
-
     <input
       type="text"
       id="dsc-percentage"
@@ -76,7 +67,6 @@
       autocomplete="off"
       disabled
     />
-
     <input
       type="text"
       id="stock"
@@ -84,7 +74,6 @@
       placeholder="PRODUCT STOCK"
       required
     />
-
     <input
       type="text"
       id="saree-len"
@@ -92,7 +81,6 @@
       placeholder="LENGTH OF SAREE (in meters)"
       required
     />
-
     <input
       type="text"
       id="blouse-len"
@@ -100,7 +88,6 @@
       placeholder="LENGTH OF BLOUSE (in inch)"
       required
     />
-
     <input
       type="text"
       id="color"
@@ -109,14 +96,12 @@
       required
       maxlength="30"
     />
-
     <select name="material" id="material" required>
       <option value="default" disabled selected>PRODUCT MATERIAL</option>
       {% for item in material %}
       <option value="{{ item }}">{{ item }}</option>
       {% endfor %}
     </select>
-
     <input
       type="text"
       id="care"
@@ -124,21 +109,20 @@
       placeholder="PRODUCT CARE"
       required
     />
-    <input type="text" id="art" name="art" placeholder="PRODUCT ART" required />
-
+    <input type="text" id="art" name="art" placeholder="Product Art" required />
     <input
       type="text"
       id="stitch"
       name="stitch"
-      placeholder="PRODUCT STITCH"
+      placeholder="Product Stitch"
       required
       value="Unstitched"
     />
   </div>
+
   <div id="right-section">
     <div id="img01">
-      <img class="overview" src="#" alt="image" />
-      <input
+      <img class="overview" src="#" alt="image" /><input
         type="file"
         name="img01"
         id="img-input01"
@@ -147,10 +131,8 @@
         required
       />
     </div>
-
     <div id="img02">
-      <img class="overview" src="#" alt="image" />
-      <input
+      <img class="overview" src="#" alt="image" /><input
         type="file"
         name="img02"
         id="img-input02"
@@ -159,10 +141,8 @@
         required
       />
     </div>
-
     <div id="img03">
-      <img class="overview" src="#" alt="image" />
-      <input
+      <img class="overview" src="#" alt="image" /><input
         type="file"
         name="img03"
         id="img-input03"
@@ -171,10 +151,8 @@
         required
       />
     </div>
-
     <div id="img04">
-      <img class="overview" src="#" alt="image" />
-      <input
+      <img class="overview" src="#" alt="image" /><input
         type="file"
         name="img04"
         id="img-input04"
@@ -199,16 +177,16 @@
     document.addEventListener("keyup", (event) => {
       if (array.includes(event.target)) {
         let value = Number(event.target.value);
-
+        console.log(value);
         if (Number.isNaN(value)) {
           event.target.style.outline = "2px solid red";
         } else {
           event.target.style.outline = "none";
-
           let ttlPrice = originalPrice.value;
           let disc = discounted_price.value;
+          let result = percent.value;
 
-          let result = Math.trunc((100 - (disc / ttlPrice) * 100) * 100) / 100;
+          result = Math.trunc((100 - (disc / ttlPrice) * 100) * 100) / 100;
           percent.value = "Discount " + result + " %";
         }
       }
