@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1.25em ;
+    margin-top: 1.25em;
 }
 
 .custom-header{
@@ -38,6 +38,7 @@
     font-size: 1.1em;
     font-weight: bold;
 }
+
 .search-box{
     padding: 0.6em;
     font-size: 1em;
@@ -48,11 +49,11 @@
     outline: none;
     transition: 0.2s ease-in-out;
 }
+
 .search-box:focus{
     border-color:#000;
     background: rgba(255, 255, 255, 0.25);
 }
-
 
 .styled-table {
     margin: 1.5em auto;
@@ -65,11 +66,11 @@
     box-shadow: 0 0.6em 1.2em rgba(0,0,0,0.15);
     transition: 0.25s ease-in-out;
 }
+
 .styled-table:hover{
-    box-shadow:0 0.9em 1.6em rgba(0, 0, 0,0.2) ;
+    box-shadow:0 0.9em 1.6em rgba(0, 0, 0,0.2);
     transform: scale(1.003);
 }
-
 
 .styled-table thead tr {
     background: rgba(68, 68, 68, 0.85);
@@ -87,8 +88,9 @@
     text-transform: uppercase;
     cursor: pointer;
 }
+
 .styled-table th:hover{
-    background: rgba(255, 255, 255, 0.1)
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .styled-table td {
@@ -101,6 +103,7 @@
     border-bottom: 0.05em solid rgba(255, 255, 255, 0.1);
     background: transparent !important;
 }
+
 .styled-table tbody tr:nth-child(even){
     background: rgba(0, 0, 0, 0.02);
 }
@@ -108,29 +111,28 @@
 .styled-table tbody tr:hover{
     background: rgba(0,123,255,0.18);
     transform: scale(1.01);
-    transition: o.15s ease-in-out;
+    transition: 0.15s ease-in-out;
     cursor: pointer;
 }
-
 
 @media (max-width: 37em) {
     .styled-table {
         width: 98%;
-        font-size: 0.8em ;
+        font-size: 0.8em;
     }
-    
+
     .search-box{
         width: 100%;
     }
 
     .custom-header{
-        flex-direction:column ;
+        flex-direction: column;
         gap: 0.5em;
         align-items: center;
     }
 
     .header-right{
-        flex-direction:column ;
+        flex-direction: column;
         width: 100%;
         align-items: flex-end;
         gap: 0.5em;
