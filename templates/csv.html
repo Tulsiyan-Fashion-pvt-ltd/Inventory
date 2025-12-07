@@ -4,7 +4,10 @@
 <link rel="stylesheet" href="../static/header.css">
 <link rel="stylesheet" href="../static/csv.css">
 
+<a href="../static/asset/inventory stock table.xlsx">Download xlsx template</a>
+
 <form action="/csv" method="POST" enctype="multipart/form-data">
+    <h2>upload xlsx file for inventory</h2>
     <input type="file" name="file" accept=".xlsx" required>
     <button type="submit">SUBMIT</button>
 </form>

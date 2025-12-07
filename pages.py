@@ -353,8 +353,8 @@ def csv_upload():
                 art = row[13]
                 stitch = row[14]
                 date = datetime.now().date()
-                print(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
-                    slen, blen, material, color, care, art, stitch, date)
+                # print(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
+                #     slen, blen, material, color, care, art, stitch, date)
                 add_product(skuid, vendorid, title, product_kwords, original_price, discounted_price, product_weight, product_stock, product_desc,
                     slen, blen, material, color, care, art, stitch, date)
                 # print(row)
