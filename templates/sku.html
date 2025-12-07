@@ -8,12 +8,7 @@
 
     <div class="header-right">
       <span class="user-count">Total: {{ data|length }}</span>
-      <input
-        type="text"
-        id="searchInput"
-        class="search-box"
-        placeholder="search skus..."
-      />
+      <input type="text" id="searchInput" class="search-box" placeholder="search skus..." />
     </div>
   </div>
 
@@ -24,38 +19,34 @@
         <th>PRODUCT IMAGE</th>
         <th>PRODUCT DETAILS</th>
         <th>PRICE</th>
-        <th>PRODUCT ID</th>
+        <!-- <th>PRODUCT ID</th> -->
       </tr>
     </thead>
 
     <tbody>
       {% for sku in data %}
       <tr>
-        <td>{{ sku[0] }}</td>
+        <td>{{ sku.skuid }}</td>
 
         <!-- FUTURE: product image -->
         <td>
-          <img
-            src="../static/uploads/{{ sku[2] if sku|length > 2 else 'placeholder.png' }}"
-            alt="SKU Image"
-            style="
+          <img src="data:image/webp;base64,{{sku.image}}" alt="SKU Image" style="
               width: 55px;
               height: 55px;
               border-radius: 6px;
-              object-fit: cover;
-            "
-          />
+              object-fit: contain;
+            " />
         </td>
 
         <!-- FUTURE: product details -->
-        <td>{{ sku[3] if sku|length > 3 else "Coming soon..." }}</td>
+        <td>{{sku.title}}</td>
 
         <!-- FUTURE: price -->
         <td>
-          {% if sku|length > 4 %} ₹ {{ sku[4] }} {% else %} ₹ — {% endif %}
+          {{sku.selling_price}}
         </td>
 
-        <td>{{ sku[1] }}</td>
+        <!-- <td>{{ sku[1] }}</td> -->
       </tr>
       {% endfor %}
     </tbody>

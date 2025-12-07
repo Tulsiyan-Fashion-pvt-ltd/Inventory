@@ -4,6 +4,8 @@ import base64
 from openpyxl import load_workbook
 from helpers import *
 from db import *
+import base64
+from inr import inr
 
 page = Blueprint('page', __name__)
 
@@ -386,9 +388,17 @@ def fetch_all_cx():
 @page.route('/sku')
 def fetch_all_sku():
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT skuID, productID FROM products")
+    cursor.execute("SELECT skuID, product_desc, disc_price, product_image FROM inventory")
     data = cursor.fetchall()
     cursor.close()
-    print("Fetched SKUs:", data)
+
+    data= [{
+        'skuid': _[0],
+        'title': _[1],
+        'selling_price': inr(_[2]).formate(),
+        'image': base64.b64encode(_[3]).decode('utf-8')
+        }   for _ in data
+    ]
+    # print("Fetched SKUs:", data)
     return render_template('sku.html', data=data, page_name='sku')
 

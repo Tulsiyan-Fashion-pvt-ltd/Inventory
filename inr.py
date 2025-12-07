@@ -20,7 +20,7 @@ class inr:
         for self.num in self.rev_val[::-1]:
             self.val += self.num
         # print(self.val)
-        return self.val
+        return '₹'+self.val
     
 if __name__ == "__main__":
     price = inr(200000000).formate()
