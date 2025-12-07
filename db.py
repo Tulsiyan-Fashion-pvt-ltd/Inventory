@@ -56,6 +56,7 @@ def fetch_ttl_users():
     cursor = mysql.connection.cursor()
     cursor.execute('''select count(userID) from user''')
     count = cursor.fetchone()
+    cursor.close()
     if count:
         count = count[0]
     else:
@@ -68,8 +69,21 @@ def fetch_sku_count():
     cursor = mysql.connection.cursor()
     cursor.execute('''select count(skuID) from inventory''')
     count = cursor.fetchone()
+    cursor.close()
     if count:
         count = count[0]
     else:
         return 'error'
     return count
+
+
+# fetching the images acc to the skuid
+def fetch_all_main_images(skuid):
+    cursor = mysql.connection.cursor()
+    cursor.execute('''select img1, img2, img3, img4
+                   from images
+                   where skuId=%s
+                   ''', (skuid, ))
+    result = cursor.fetchone()
+    cursor.close()
+    return result

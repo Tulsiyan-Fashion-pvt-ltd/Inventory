@@ -1,0 +1,23 @@
+{% extends 'layout.html'%}
+
+{% block body %}
+<link rel="stylesheet" href="../static/export.css">
+
+
+<form action="" method="post">
+    <input type="text" id="search-bar" name="search" placeholder="search">
+</form>
+
+<div id="image-container">
+{% for img in images %}
+    <div style="text-align:center;">
+        <img src="data:image/jpeg;base64,{{img}}" style="width:200px; border-radius:8px;">
+        <br>
+        <a href="data:image/jpeg;base64,{{img}}" download="image_{{ loop.index }}.jpg">
+            <button>Download</button>
+        </a>
+    </div>
+{% endfor %}
+</div>
+
+{%endblock%}

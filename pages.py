@@ -402,3 +402,28 @@ def fetch_all_sku():
     # print("Fetched SKUs:", data)
     return render_template('sku.html', data=data, page_name='sku')
 
+
+
+@page.route('/export', methods=['GET', 'POST'])
+def export():
+    if request.method == 'POST':
+        search = request.form.get('search')
+        return redirect(f'/export?query={search}')
+    
+    if request.args.get('query'):
+        # if there is a search paramenter in the url then run an sql query
+        #to check the images in the database
+
+        images = fetch_all_main_images(request.args.get('query'))
+        if not images:
+            return 'invalid skuid <a href="/export">Go Back<a>'
+    
+        #convert the images into the png formate
+        images = [
+            base64.b64encode(convert_into_jpeg(images[_])).decode('utf-8') if images[_] else None
+            for _ in range(len(images))
+        ]
+        # print(images)
+        return render_template('download_image.html', page_name='export', images=images)
+
+    return render_template('download_image.html', page_name='export')
