@@ -18,6 +18,7 @@
         <th>SKU ID</th>
         <th>PRODUCT IMAGE</th>
         <th>PRODUCT DETAILS</th>
+        <th>PRODUCT STOCK</th>
         <th>PRICE</th>
         <!-- <th>PRODUCT ID</th> -->
       </tr>
@@ -25,7 +26,7 @@
 
     <tbody>
       {% for sku in data %}
-      <tr>
+      <tr product="{{sku.skuid}}">
         <td>{{ sku.skuid }}</td>
 
         <!-- FUTURE: product image -->
@@ -41,6 +42,8 @@
         <!-- FUTURE: product details -->
         <td>{{sku.title}}</td>
 
+        <td>{{sku.stock}}</td>
+
         <!-- FUTURE: price -->
         <td>
           {{sku.selling_price}}
@@ -52,4 +55,20 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', e=>{
+    const target = document.querySelectorAll('tbody tr');
+
+    target.forEach((element)=>{
+      console.log('hit')
+      element.addEventListener('click', event=>{
+        let sku = element.getAttribute('product');
+
+        // open url in new tab
+        window.open(`./edit?search=${sku}`);
+      })
+    })
+  })
+</script>
 {% endblock %}

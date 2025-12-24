@@ -24,9 +24,11 @@
         <p class="title">ORIGINAL PRICE</p>
         <input type="text" id="price" name="price" placeholder="₹ ORIGINAL PRODUCT PRICE" required autocomplete="off">
         <p class="title">DISCOUNTED PRICE</p>
-        <input type="text" id="dsc-price" name="dsc-price" placeholder="₹ DISCOUNTED PRODUCT PRICE" required autocomplete="off" >
+        <input type="text" id="dsc-price" name="dsc-price" placeholder="₹ DISCOUNTED PRODUCT PRICE" required
+            autocomplete="off">
         <p class="title">DISCOUNT PERCENTAGE</p>
-        <input type="text" id="dsc-percentage" name="dsc-prctng" placeholder="DISCOUNT PERCENTAGE %" required autocomplete="off" disabled>
+        <input type="text" id="dsc-percentage" name="dsc-prctng" placeholder="DISCOUNT PERCENTAGE %" required
+            autocomplete="off" disabled>
         <p class="title">PRODUCT STOCK</p>
         <input type="text" id="stock" name="stock" placeholder="PRODUCT STOCK" required>
         <p class="title">SAREE LENGHT (in meters)</p>
@@ -39,7 +41,7 @@
         <select name="material" id="material" required>
             <option value="default" selected>PRODUCT MATERIAL</option>
             {% for item in material %}
-                <option value="{{ item }}">{{ item }}</option>
+            <option value="{{ item }}">{{ item }}</option>
             {% endfor %}
         </select>
 
@@ -55,16 +57,20 @@
 
     <div id="right-section">
         <div id="img01">
-            <img class="overview" src="#" alt="image"><input type="file" name="img01" id="img-input01" class="choose-image" accept="image/*">
+            <img class="overview" src="#" alt="image"><input type="file" name="img01" id="img-input01"
+                class="choose-image" accept="image/*">
         </div>
         <div id="img02">
-            <img class="overview" src="#" alt="image"><input type="file" name="img02" id="img-input02" class="choose-image" accept="image/*">
+            <img class="overview" src="#" alt="image"><input type="file" name="img02" id="img-input02"
+                class="choose-image" accept="image/*">
         </div>
         <div id="img03">
-            <img class="overview" src="#" alt="image"><input type="file" name="img03" id="img-input03" class="choose-image" accept="image/*">
+            <img class="overview" src="#" alt="image"><input type="file" name="img03" id="img-input03"
+                class="choose-image" accept="image/*">
         </div>
         <div id="img04">
-            <img class="overview" src="#" alt="image"><input type="file" name="img04" id="img-input04" class="choose-image" accept="image/*">
+            <img class="overview" src="#" alt="image"><input type="file" name="img04" id="img-input04"
+                class="choose-image" accept="image/*">
         </div>
 
         <button id="submit" type="submit">UPDATE PRODUCT DETAILS</button>
@@ -73,7 +79,7 @@
 
 
 <script>
-    function percentage(){
+    function percentage() {
         let originalPrice = document.querySelector('#price');
         let discounted_price = document.querySelector('#dsc-price');
         let percent = document.querySelector('#dsc-percentage');
@@ -81,23 +87,23 @@
         let array = [originalPrice, discounted_price, percent];
 
         document.addEventListener('keyup', event => {
-            if (array.includes(event.target)){
-                
+            if (array.includes(event.target)) {
+
                 let value = Number(event.target.value);
                 console.log(value)
-                if(Number.isNaN(value)){
+                if (Number.isNaN(value)) {
                     event.target.style.outline = '2px solid red';
                 }
-                else{
+                else {
                     event.target.style.outline = 'none';
 
                     //<!-- writing the actual code now -->
                     //<!-- calculate percentage and  display -->
-                    
+
                     let ttlPrice = originalPrice.value;
                     let disc = discounted_price.value;
                     let result = percent.value;
-                    
+
                     percent.value = calculate(disc, ttlPrice)
                 }
             }
@@ -105,9 +111,9 @@
     }
 
 
-    function calculate(disc, ttlPrice){
-        let result = Math.trunc((100 - ((disc/ttlPrice)*100))*100)/100;
-        return 'Discount '+result+' %';
+    function calculate(disc, ttlPrice) {
+        let result = Math.trunc((100 - ((disc / ttlPrice) * 100)) * 100) / 100;
+        return 'Discount ' + result + ' %';
     }
 
     percentage();
@@ -117,84 +123,98 @@
 <script>
     let search = document.querySelector('input');
 
-    search.addEventListener('keyup', async event => {
+    search.addEventListener('keyup', (e) => {
         if (event.key == 'Enter') {
             let query = search.value;
-
-            let response = await fetch('/edit', {
-                method: 'post',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 'query': query })
-            })
-
-            let data = await response.json();
-            let kw = data.keywords;
-            data = data.data;
-
-            console.log(kw)
-
-            let title = document.querySelector('#title');
-            title.value = data.title;
-
-            let vendor = document.querySelector('#vendor-id');
-            vendor.value = data.vid;
-
-            let desc = document.querySelector('#desc');
-            desc.value = data.desc;
-
-            let keywords = document.querySelector('#keywords');
-            keywords.value = kw;
-
-            let weight = document.querySelector('#weight');
-            weight.value = data.weight;
-
-            let price = document.querySelector('#price');
-            price.value = data.og_price;
-
-            let disc_price = document.querySelector('#dsc-price');
-            disc_price.value = data.disc_price;
-
-            let prctng = document.querySelector('#dsc-percentage');
-            prctng.value = calculate(disc_price.value, price.value);
-
-            let stock = document.querySelector('#stock');
-            stock.value = data.stock;
-
-            let slen = document.querySelector('#saree-len');
-            slen.value = data.slen;
-
-            let blen = document.querySelector('#blouse-len');
-            blen.value = data.slen;
-
-            let color = document.querySelector('#color');
-            color.value = data.color;
-
-            let material = document.querySelector('#material option');
-            material.value = data.material;
-            material.innerText = data.material;
-
-            let care = document.querySelector('#care');
-            care.value = data.care;
-
-            let art = document.querySelector('#art');
-            art.value = data.art;
-
-            let stitch = document.querySelector('#stitch');
-            stitch.value = data.stitch;
-
-            let img01 = document.querySelector('#img01 .overview');
-            img01.src = `data:img/png;base64,${data.img01}`;
-
-            let img02 = document.querySelector('#img02 .overview');
-            img02.src = `data:img/png;base64,${data.img02}`;
-
-            let img03 = document.querySelector('#img03 .overview');
-            img03.src = `data:img/png;base64,${data.img03}`;
-
-            let img04 = document.querySelector('#img04 .overview');
-            img04.src = `data:img/png;base64,${data.img04}`;
+            requestProduct(query);
         }
     })
+
+    document.addEventListener('DOMContentLoaded', (e)=> {
+        // if the search product is coming through url argument
+        const queryString = window.location.search;
+
+        const urlParams = new URLSearchParams(queryString);
+
+        if (urlParams.has('search')){
+            requestProduct(urlParams.get('search'));
+        }
+    })
+
+    async function requestProduct(query) {
+        let response = await fetch('/edit', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'query': query })
+        })
+
+        let data = await response.json();
+        let kw = data.keywords;
+        data = data.data;
+
+        // console.log(kw)
+
+        let title = document.querySelector('#title');
+        title.value = data.title;
+
+        let vendor = document.querySelector('#vendor-id');
+        vendor.value = data.vid;
+
+        let desc = document.querySelector('#desc');
+        desc.value = data.desc;
+
+        let keywords = document.querySelector('#keywords');
+        keywords.value = kw;
+
+        let weight = document.querySelector('#weight');
+        weight.value = data.weight;
+
+        let price = document.querySelector('#price');
+        price.value = data.og_price;
+
+        let disc_price = document.querySelector('#dsc-price');
+        disc_price.value = data.disc_price;
+
+        let prctng = document.querySelector('#dsc-percentage');
+        prctng.value = calculate(disc_price.value, price.value);
+
+        let stock = document.querySelector('#stock');
+        stock.value = data.stock;
+
+        let slen = document.querySelector('#saree-len');
+        slen.value = data.slen;
+
+        let blen = document.querySelector('#blouse-len');
+        blen.value = data.slen;
+
+        let color = document.querySelector('#color');
+        color.value = data.color;
+
+        let material = document.querySelector('#material option');
+        material.value = data.material;
+        material.innerText = data.material;
+
+        let care = document.querySelector('#care');
+        care.value = data.care;
+
+        let art = document.querySelector('#art');
+        art.value = data.art;
+
+        let stitch = document.querySelector('#stitch');
+        stitch.value = data.stitch;
+
+        let img01 = document.querySelector('#img01 .overview');
+        img01.src = `data:img/png;base64,${data.img01}`;
+
+        let img02 = document.querySelector('#img02 .overview');
+        img02.src = `data:img/png;base64,${data.img02}`;
+
+        let img03 = document.querySelector('#img03 .overview');
+        img03.src = `data:img/png;base64,${data.img03}`;
+
+        let img04 = document.querySelector('#img04 .overview');
+        img04.src = `data:img/png;base64,${data.img04}`;
+    }
 </script>
 
 <script src="../static/scripts/image_overview.js"></script>

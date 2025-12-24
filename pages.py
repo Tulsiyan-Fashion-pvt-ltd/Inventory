@@ -111,24 +111,24 @@ def edit():
             cursor.close()
             # print(data)
             product_details = {
-                'img01': base64.b64encode(data[12]).decode('utf-8') if data[11] else None,
-                'img02': base64.b64encode(data[13]).decode('utf-8') if data[12] else None,
-                'img03': base64.b64encode(data[14]).decode('utf-8') if data[13] else None,
-                'img04': base64.b64encode(data[15]).decode('utf-8') if data[14] else None,
-                'title': data[1],
-                'vid': data[0],
-                'desc': data[6],
-                'weight': data[4],
-                'og_price': data[2],
-                'disc_price': data[3],
-                'stock': data[5],
-                'slen': data[7],
-                'blen': data[8],
-                'material': data[9],
-                'color': data[10],
-                'care': data[11],
-                'art': data[16],
-                'stitch': data[17]
+                'img01': base64.b64encode(data[12]).decode('utf-8') if data and data[11] else None,
+                'img02': base64.b64encode(data[13]).decode('utf-8') if data and data[12] else None,
+                'img03': base64.b64encode(data[14]).decode('utf-8') if data and data[13] else None,
+                'img04': base64.b64encode(data[15]).decode('utf-8') if data and data[14] else None,
+                'title': data[1] if data else None,
+                'vid': data[0] if data else None,
+                'desc': data[6] if data else None,
+                'weight': data[4] if data else None,
+                'og_price': data[2] if data else None,
+                'disc_price': data[3] if data else None,
+                'stock': data[5] if data else None,
+                'slen': data[7] if data else None,
+                'blen': data[8] if data else None,
+                'material': data[9] if data else None,
+                'color': data[10] if data else None,
+                'care': data[11] if data else None,
+                'art': data[16] if data else None,
+                'stitch': data[17] if data else None
             }
 
             cursor = mysql.connection.cursor()
@@ -388,7 +388,7 @@ def fetch_all_cx():
 @page.route('/sku')
 def fetch_all_sku():
     cursor = mysql.connection.cursor()
-    cursor.execute("SELECT skuID, product_desc, disc_price, product_image FROM inventory")
+    cursor.execute("SELECT skuID, product_desc, disc_price, product_image, product_stock FROM inventory")
     data = cursor.fetchall()
     cursor.close()
 
@@ -396,7 +396,8 @@ def fetch_all_sku():
         'skuid': _[0],
         'title': _[1],
         'selling_price': inr(_[2]).formate(),
-        'image': base64.b64encode(_[3]).decode('utf-8')
+        'image': base64.b64encode(_[3]).decode('utf-8'),
+        'stock': _[4]
         }   for _ in data
     ]
     # print("Fetched SKUs:", data)
