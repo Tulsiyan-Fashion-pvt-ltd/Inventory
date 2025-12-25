@@ -4,9 +4,6 @@ from db import init_db
 import os
 from helpers import *
 
-
-
-
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 

@@ -22,10 +22,12 @@ h1 span {
 
 h1 {
     font-size: 3em;
+    color: white;
 }
 
 #greet {
     font-size: 1.8em;
+    color: white;
 }
 
 main {
