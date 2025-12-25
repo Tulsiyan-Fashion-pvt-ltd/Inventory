@@ -65,6 +65,9 @@
     background: transparent;
     box-shadow: 0 0.6em 1.2em rgba(0,0,0,0.15);
     transition: 0.25s ease-in-out;
+    overflow: scroll;
+    display: block;
+    height: 77vh;
 }
 
 .styled-table:hover{
