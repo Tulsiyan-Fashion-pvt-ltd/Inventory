@@ -57,7 +57,7 @@
 
 .styled-table {
     margin: 1.5em auto;
-    width: 90%;
+    width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     border-radius: 0.8em;
@@ -66,8 +66,8 @@
     box-shadow: 0 0.6em 1.2em rgba(0,0,0,0.15);
     transition: 0.25s ease-in-out;
     overflow: scroll;
-    display: block;
-    height: 77vh;
+    /* display: block; */
+    /* height: 77vh; */
 }
 
 .styled-table:hover{
