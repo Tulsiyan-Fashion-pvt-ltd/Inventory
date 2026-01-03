@@ -108,5 +108,5 @@ main {
     /* background-image: url(./icons/hooter.svg); */
     background-repeat: no-repeat;
     background-position: center center;
-    overflow: hidden;
+    /* overflow: hidden; */
 }

@@ -1,5 +1,6 @@
 from flask_mysqldb import MySQL
 from helpers import*
+from datetime import datetime
 
 mysql = MySQL()
 
@@ -42,10 +43,13 @@ def add_product(skuid, vendorid, title, product_kwords, original_price, discount
         # print(skuid, keyword)
         cursor.execute('''insert into searching_keywords(skuID, search_result) values(%s, %s)''',
                        (skuid, keyword))
-        
+    
+    time = datetime.now().strftime('%H:%M:%S')
     for _ in range(int(product_stock)):
         productid = product_handler.create_productid()
-        cursor.execute('''insert into products(skuID, productID) values(%s, %s)''', (skuid, productid))
+        cursor.execute('''insert into products(skuID, productID, stock, unit_creation_date, unit_creation_time)
+                       values(%s, %s, %s, %s, %s)
+                       ''', (skuid, productid, 'in', date, time))
     mysql.connection.commit()
     cursor.close()
     return

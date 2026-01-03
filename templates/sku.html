@@ -12,48 +12,50 @@
     </div>
   </div>
 
-  <table class="styled-table" id="skuTable">
-    <thead>
-      <tr>
-        <th>SKU ID</th>
-        <th>PRODUCT IMAGE</th>
-        <th>PRODUCT DETAILS</th>
-        <th>PRODUCT STOCK</th>
-        <th>PRICE</th>
-        <!-- <th>PRODUCT ID</th> -->
-      </tr>
-    </thead>
+  <div id="table">
+    <table class="styled-table" id="skuTable">
+      <thead>
+        <tr>
+          <th>SKU ID</th>
+          <th>PRODUCT IMAGE</th>
+          <th>PRODUCT DETAILS</th>
+          <th>PRODUCT STOCK</th>
+          <th>PRICE</th>
+          <!-- <th>PRODUCT ID</th> -->
+        </tr>
+      </thead>
 
-    <tbody>
-      {% for sku in data %}
-      <tr product="{{sku.skuid}}">
-        <td>{{ sku.skuid }}</td>
+      <tbody>
+        {% for sku in data %}
+        <tr product="{{sku.skuid}}">
+          <td>{{ sku.skuid }}</td>
 
-        <!-- FUTURE: product image -->
-        <td>
-          <img src="data:image/webp;base64,{{sku.image}}" alt="SKU Image" style="
-              width: 55px;
-              height: 55px;
-              border-radius: 6px;
-              object-fit: contain;
-            " />
-        </td>
+          <!-- FUTURE: product image -->
+          <td>
+            <img src="data:image/webp;base64,{{sku.image}}" alt="SKU Image" style="
+                width: 55px;
+                height: 55px;
+                border-radius: 6px;
+                object-fit: contain;
+              " />
+          </td>
 
-        <!-- FUTURE: product details -->
-        <td>{{sku.title}}</td>
+          <!-- FUTURE: product details -->
+          <td>{{sku.title}}</td>
 
-        <td>{{sku.stock}}</td>
+          <td>{{sku.stock}}</td>
 
-        <!-- FUTURE: price -->
-        <td>
-          {{sku.selling_price}}
-        </td>
+          <!-- FUTURE: price -->
+          <td>
+            {{sku.selling_price}}
+          </td>
 
-        <!-- <td>{{ sku[1] }}</td> -->
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+          <!-- <td>{{ sku[1] }}</td> -->
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
